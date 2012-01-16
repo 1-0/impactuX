@@ -27,10 +27,11 @@ import objects, functions
 ####### init section #######
 def mainrun(scr_params=((640,480),0,32)):
     """mainrun(scr_params=((640,480),0,32)) - screen of main menu ImpactuX"""
-    i_exit=functions.iExit() #button functions
-    i_run=functions.iRun()
-    i_setup=functions.iSetup()
-    i_record=functions.iRecord()
+    i_exit = functions.iExit() #button functions
+    i_run = functions.iRun()
+    i_setup = functions.iSetup()
+    i_record = functions.iRecord()
+    i_restore = functions.iRestore()
     
     ending_play=functions.Ending_play()
     button_press_checking=functions.Button_press_checking()
@@ -59,12 +60,12 @@ def mainrun(scr_params=((640,480),0,32)):
 
     textbuttons = \
     [objects.t_button(285, 40, "Start game", i_run, f_s, b_s, black, white), \
-    objects.t_button(270,90, "Continue game", i_run, f_s, b_s, black, green), \
+    objects.t_button(270,90, "Continue game", i_restore, f_s, b_s, black, green), \
     objects.t_button(295,140, "Options", i_setup, f_s, b_s, black, white), \
     objects.t_button(300,190, "Score", i_record, f_s, b_s, black, green), \
     objects.t_button(305,240, "EXIT", i_exit, f_s, b_s, black, red)]
     
-    textlabels = [objects.t_button(270, 390, "ImpactuX", i_exit, 32, 1, red, None),]
+    textlabels = [objects.t_label(270, 390, "ImpactuX", i_exit, 32, 1, red, None),]
     
 #    objects.t_button(315,240, "EXIT", ending_play, 20, 5, black, red)]
     font1=pygame.font.Font("."+os.sep+"fonts"+os.sep+"LiberationSans-Regular.ttf", 18)

@@ -311,7 +311,7 @@ class t_button:
     def check_in(self, c_coordx, c_coordy):
         self.mouse_in=sqcheck.CheckRectPoint(self.pos_x, self.pos_y, self.width, self.height, c_coordx, c_coordy)
         if not(self.mouse_in):
-            self.state=0
+            self.state = 0
         return self.mouse_in
         
     def ch_state(self, event_type):
@@ -322,6 +322,7 @@ class t_button:
             self.state=2
         elif event_type==MOUSEBUTTONUP:
             self.state=0
+        return self.state
 
 class t_label(t_button):
     """t_label - simpley text label"""
@@ -329,6 +330,8 @@ class t_label(t_button):
     def show_at(self, plato):
         if self.color:
             pygame.draw.rect(plato, self.color, (self.pos_x, self.pos_y, self.width, self.height), 0)
+        plato.blit(self.font_pic, (self.pos_x+self.border_size, self.pos_y+self.border_size))
+        3
     
     def check_in(self, c_coordx, c_coordy):
         pass

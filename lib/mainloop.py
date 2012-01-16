@@ -36,6 +36,7 @@ class scenes_run():
         self.set_zero()
 
     def set_zero(self):
+        self.g_lvl = 0
         self.game_lvl = 0
         self.g_time = 0
         self.g_score = 0
@@ -88,6 +89,18 @@ class scenes_run():
             self.runing = False
             return 0
         elif scene_i == "run_game":
+            self.game_lvl = self.g_lvl
+            game_result = self.runing_game()
+            if game_result == "exit":
+                self.runing = False
+                return 0
+            elif scene_i==0:
+                return 0
+            else:
+                #functions.update_records(game_result)
+                pass
+        elif scene_i == "restore_game":
+            self.game_lvl=self.g_lvl+1
             game_result = self.runing_game()
             if game_result == "exit":
                 self.runing = False

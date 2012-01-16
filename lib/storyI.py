@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#       .py
+#       storyI.py
 #       impactuX - tuX collision game
 #       Copyright 2011 10 <1_0 <at> list.ru>
 #       
@@ -28,9 +28,25 @@ import objects, functions
 def get_text_lvl(lvl):
     """get_text_lvl(lvl) - geting story text for lvl"""
     if lvl==0:
-        ttt="Tux protect MP3-player from fly(Walk)man."
+        ttt="Tux protects the MP3-player from the fly(Walk)man."
     elif lvl==1:
-        ttt="Tux protect smartphone from white(Black)berry."
+        ttt="Tux protects the smartphone from the white(Black)berry."
+    elif lvl==2:
+        ttt="Tux protects the tablet from the pine(apple)."
+    elif lvl==3:
+        ttt="Tux protects the notebook from the SM(MS)allDOS."
+    elif lvl==4:
+        ttt="Tux protects the desktop from the (Win)Dors."
+    elif lvl==5:
+        ttt="Tux protects the car from the axi(O)s(/2)."
+    elif lvl==6:
+        ttt="Tux protects the server from the ocsic(cisco)."
+    elif lvl==7:
+        ttt="Tux protects the train from the AI(X)DS."
+    elif lvl==8:
+        ttt="Tux protects the airplane from the moon(sol)aris."
+    elif lvl==9:
+        ttt="Tux protects the NPP from the bmx(qnx)."
     ttt = "Level - "+str(lvl+1)+" - "+ttt
     return ttt
         
@@ -56,7 +72,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0):
     blue = (0, 0, 255)
     yellow = (255, 255, 0)
     black=(0, 0, 0)
-    
+    #print lvl
     bgif="."+os.sep+"pic"+os.sep+"bg_story_"+str(lvl)+".jpg"
     
     soif1="."+os.sep+"sounds"+os.sep+"s1.ogg"
@@ -71,11 +87,11 @@ def mainrun(scr_params=((640,480),0,32), lvl=0):
 
     textbuttons = \
     [objects.t_button(55, 430, "Start round", i_run, f_s, b_s, black, white), \
-    objects.t_button(295,430, "Cansel", i_setup, f_s, b_s, white, red), \
+    objects.t_button(295,430, "Cancel", i_setup, f_s, b_s, white, red), \
     objects.t_button(555,430, "EXIT", i_exit, f_s, b_s, black, red)]
     
-    textlabels = [objects.t_button(55, 380, l_text, i_exit, 22, 1, blue, yellow), \
-    objects.t_button(270, 30, "ImpactuX", i_exit, 32, 1, red, None)]
+    textlabels = [objects.t_label(55, 380, l_text, i_exit, 22, 1, blue, yellow), \
+    objects.t_label(270, 230, "ImpactuX", i_exit, 32, 1, red, None)]
     
 #    objects.t_button(315,240, "EXIT", ending_play, 20, 5, black, red)]
     font1=pygame.font.Font("."+os.sep+"fonts"+os.sep+"LiberationSans-Regular.ttf", 18)

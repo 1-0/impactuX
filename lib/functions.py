@@ -33,6 +33,10 @@ class iExit:
 class iRun:
     def __call__(self):
         return "run_game"
+        
+class iRestore:
+    def __call__(self):
+        return "restore_game"
 
 class iSetup:
     def __call__(self):
