@@ -30,15 +30,18 @@ import functions
 
 class scenes_run():
     """scenes_run - class of runing game scenes"""
-    def __init__():
+    def __init__(self):
         self.runing = True
+        self.lvls_count = 10
+        self.set_zero()
+
+    def set_zero(self):
         self.game_lvl = 0
         self.g_time = 0
         self.g_score = 0
         self.balls_pos = None
-        self.lvls_count = 10
         
-    def runing_game():
+    def runing_game(self):
         game_runing = True
         while game_runing:
             #start story screen
@@ -48,6 +51,8 @@ class scenes_run():
                 #start play screen
                 game_pass = runI.mainrun(functions.get_screen_set(), \
                 self.game_lvl, self.balls_pos, self.g_time, self.g_score)
+                if game_pass["exit"]:
+                    return  "exit"
                 if game_pass["run"]:
                     self.game_lvl += 1
                     self.g_score = game_pass["score"]
@@ -61,25 +66,46 @@ class scenes_run():
             else:
                 game_runing = False
         #start "The End" screen
-        winI.mainrun(functions.get_screen_set(), g_res, \ 
+        winI.mainrun(functions.get_screen_set(), g_res, \
         self.g_score, self.g_time)
                 
-        self.game_lvl = 0
-        self.g_time = 0
         sss = self.g_score
-        self.g_score = 0
-        self.balls_pos = None
+        
+        self.set_zero()
         return sss
 
-    def mainrun():
+    def mainrun(self):
+        #start menu screen
         wind_i = menuI.mainrun(functions.get_screen_set()) #[next_window, exit_results]
-        if wind_i[0] == "exit":
-            functions.exit_game(wind_i[1])
-        elif wind_i[0] == "run_game":
-            game_result = self.runing_game(wind_i[1])
-            functions.update_records(game_result)
-        return 0
-    
+        if wind_i == "exit":
+            #functions.exit_game()
+            self.runing = False
+            return 0
+        elif wind_i == "run_game":
+            game_result = self.runing_game()
+            if game_result == "exit":
+                self.runing = False
+                return 0
+            else:
+                functions.update_records(game_result)
+        elif wind_i == "setup_game":
+            setup_result = menuI.mainrun(functions.get_screen_set())#start setup screen
+            if setup_result == "exit":
+                self.runing = False
+                return 0
+            else:
+                functions.update_setup(setup_result)
+        elif wind_i == "record_game":
+            rrr = recordI.mainrun(functions.get_screen_set())#start record screen
+            if rrr == "exit":
+                self.runing = False
+                return 0
+
+def mainrun():
+    n_game = scenes_run()
+    while n_game.runing:
+        n_game.mainrun()
+
 if __name__ == '__main__':
     n_game = scenes_run()
     while n_game.runing:

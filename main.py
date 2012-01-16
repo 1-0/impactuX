@@ -22,11 +22,7 @@
 
 import lib.mainloop
 
-def mainrun():
-    lib.mainloop.mainrun()
-    
 if __name__ == '__main__':
-    runing=True
-    while runing:
-        mainrun()
+    lib.mainloop.mainrun()
+    print "Пока!"
 
