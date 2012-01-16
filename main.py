@@ -24,5 +24,5 @@ import lib.mainloop
 
 if __name__ == '__main__':
     lib.mainloop.mainrun()
-    print "Пока!"
+    #print "Buy!"
 

@@ -26,8 +26,8 @@ import objects, functions
 
 ####### init section #######
 def mainrun(scr_params=((640,480),0,32)):
-    
-    i_exit=functions.iExit()
+    """mainrun(scr_params=((640,480),0,32)) - screen of main menu ImpactuX"""
+    i_exit=functions.iExit() #button functions
     i_run=functions.iRun()
     i_setup=functions.iSetup()
     i_record=functions.iRecord()
@@ -35,8 +35,11 @@ def mainrun(scr_params=((640,480),0,32)):
     ending_play=functions.Ending_play()
     button_press_checking=functions.Button_press_checking()
     
-    #r_size=10
-    #r_delta=2
+    #init vars
+    
+    f_s = 20 #font size
+    b_s = 5 #border size
+    
     white = (255, 255, 255)
     red = (255, 0, 0)
     green = (0, 255, 0)
@@ -49,20 +52,20 @@ def mainrun(scr_params=((640,480),0,32)):
     soif1="."+os.sep+"sounds"+os.sep+"s1.ogg"
     
     pygame.init()
-    #(640,480),0,32
-    sss=scr_params[0]
-    mmm=scr_params[1]
-    ddd=scr_params[2]
     
-    screen=pygame.display.set_mode(sss,mmm,ddd)
+    screen=pygame.display.set_mode(scr_params[0], scr_params[1], scr_params[2])
     
     background=pygame.image.load(bgif).convert()
 
-    textbuttons=[objects.t_button(285, 40, "Start game", i_run, 20, 5, black, white), \
-    objects.t_button(270,90, "Continue game", i_run, 20, 5, black, green), \
-    objects.t_button(295,140, "Options", i_setup, 20, 5, black, white), \
-    objects.t_button(295,190, "Records", i_record, 20, 5, black, green), \
-    objects.t_button(315,240, "EXIT", i_exit, 20, 5, black, red)]
+    textbuttons = \
+    [objects.t_button(285, 40, "Start game", i_run, f_s, b_s, black, white), \
+    objects.t_button(270,90, "Continue game", i_run, f_s, b_s, black, green), \
+    objects.t_button(295,140, "Options", i_setup, f_s, b_s, black, white), \
+    objects.t_button(300,190, "Score", i_record, f_s, b_s, black, green), \
+    objects.t_button(305,240, "EXIT", i_exit, f_s, b_s, black, red)]
+    
+    textlabels = [objects.t_button(270, 390, "ImpactuX", i_exit, 32, 1, red, None),]
+    
 #    objects.t_button(315,240, "EXIT", ending_play, 20, 5, black, red)]
     font1=pygame.font.Font("."+os.sep+"fonts"+os.sep+"LiberationSans-Regular.ttf", 18)
     
@@ -78,13 +81,14 @@ def mainrun(scr_params=((640,480),0,32)):
         #t=pygame.time.delay(100)
         for event in pygame.event.get():
             if event.type == QUIT:
-                ending_play()
-                return 0
+                i_exit()
+                #ending_play()
+                return i_exit()
                 
             if event.type == KEYUP:
                 if event.key == K_ESCAPE:
                     run_now=False
-                    return 0
+                    return i_exit()
 
             elif event.type == MOUSEBUTTONDOWN:
                 x_n0,y_n0=event.pos
@@ -102,7 +106,7 @@ def mainrun(scr_params=((640,480),0,32)):
                 if int(event.button) == 1:
                     x_n0,y_n0=event.pos
                     
-                    check_tb=button_press_checking(x_n0,y_n0, textbuttons)
+                    check_tb=button_press_checking(x_n0,    y_n0, textbuttons)
                     if check_tb[0]:
                         check_tb[1].ch_state(event.type)
                         return check_tb[1].doing()
@@ -110,6 +114,9 @@ def mainrun(scr_params=((640,480),0,32)):
         screen.blit(background, (0,0))
         
         for b_obj in textbuttons:
+            b_obj.show_at(screen)
+
+        for b_obj in textlabels:
             b_obj.show_at(screen)
     
         #pygame.display.update()
