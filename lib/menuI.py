@@ -49,6 +49,7 @@ def mainrun(scr_params=((640,480),0,32)):
     black=(0, 0, 0)
     
     bgif="."+os.sep+"pic"+os.sep+"bgstart.jpg"
+    i_icon="."+os.sep+"pic"+os.sep+"impactuX.png"
     
     soif1="."+os.sep+"sounds"+os.sep+"s1.ogg"
     
@@ -57,7 +58,9 @@ def mainrun(scr_params=((640,480),0,32)):
     screen=pygame.display.set_mode(scr_params[0], scr_params[1], scr_params[2])
     
     background=pygame.image.load(bgif).convert()
-
+    m_icon=pygame.image.load(i_icon).convert_alpha()
+    #m_icon=pygame.image.load(i_icon).convert()
+    
     textbuttons = \
     [objects.t_button(285, 40, "Start game", i_run, f_s, b_s, black, white), \
     objects.t_button(270,90, "Continue game", i_restore, f_s, b_s, black, green), \
@@ -74,7 +77,7 @@ def mainrun(scr_params=((640,480),0,32)):
     font1=pygame.font.Font("."+os.sep+"fonts"+os.sep+"LiberationSans-Regular.ttf", 18)
     
     pygame.display.set_caption("ImpactuX Menu")
-    
+    pygame.display.set_icon(m_icon)
     clock = pygame.time.Clock()
     
     run_now = True

@@ -406,8 +406,8 @@ class WidgetsPack():
                 self.width=list_w[0].width
                 list_w[0].pos_x=self.pos_x
                 list_w[0].pos_y=self.pos_y
-                self.w_list.append(list_w[0])
-                list_w=list_w[1:]
+                self.w_list.append(list_w.pop(0))
+                #list_w=list_w[1:]
             
             for wig in list_w:
                 self.add_wig(wig)
