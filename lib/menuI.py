@@ -65,8 +65,11 @@ def mainrun(scr_params=((640,480),0,32)):
     objects.t_button(300,190, "Score", i_record, f_s, b_s, black, green), \
     objects.t_button(305,240, "EXIT", i_exit, f_s, b_s, black, red)]
     
-    textlabels = [objects.t_label(270, 390, "ImpactuX", i_exit, 32, 1, red, None),]
+    textbuttons = objects.WidgetsPack(250, 70, 65, False, textbuttons)
     
+    
+    #textlabels = [objects.t_label(270, 390, "ImpactuX", i_exit, 32, 1, red, None),]
+    textbuttons.add_wig(objects.t_label(270, 390, "ImpactuX", i_exit, 32, 1, red, None))
 #    objects.t_button(315,240, "EXIT", ending_play, 20, 5, black, red)]
     font1=pygame.font.Font("."+os.sep+"fonts"+os.sep+"LiberationSans-Regular.ttf", 18)
     
@@ -93,13 +96,13 @@ def mainrun(scr_params=((640,480),0,32)):
 
             elif event.type == MOUSEBUTTONDOWN:
                 x_n0,y_n0=event.pos
-                check_tb=button_press_checking(x_n0,y_n0, textbuttons)
+                check_tb=button_press_checking(x_n0,y_n0, textbuttons.w_list)
                 if check_tb[0]:
                     check_tb[1].ch_state(event.type)
     
             elif event.type == MOUSEMOTION:
                 x_n0,y_n0=event.pos
-                check_tb=button_press_checking(x_n0,y_n0, textbuttons)
+                check_tb=button_press_checking(x_n0,y_n0, textbuttons.w_list)
                 if check_tb[0]:
                     check_tb[1].ch_state(event.type)
 
@@ -107,18 +110,18 @@ def mainrun(scr_params=((640,480),0,32)):
                 if int(event.button) == 1:
                     x_n0,y_n0=event.pos
                     
-                    check_tb=button_press_checking(x_n0,    y_n0, textbuttons)
+                    check_tb=button_press_checking(x_n0,    y_n0, textbuttons.w_list)
                     if check_tb[0]:
                         check_tb[1].ch_state(event.type)
                         return check_tb[1].doing()
                        
         screen.blit(background, (0,0))
         
-        for b_obj in textbuttons:
+        for b_obj in textbuttons.w_list:
             b_obj.show_at(screen)
 
-        for b_obj in textlabels:
-            b_obj.show_at(screen)
+        #for b_obj in textlabels:
+        #    b_obj.show_at(screen)
     
         #pygame.display.update()
         pygame.display.flip()

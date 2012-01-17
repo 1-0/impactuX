@@ -53,7 +53,8 @@ def get_text_lvl(lvl):
     
 
 def mainrun(scr_params=((640,480),0,32), lvl=0):
-    """mainrun(scr_params=((640,480),0,32)) - screen of story scene in ImpactuX"""
+    """mainrun(scr_params=((640,480),0,32), lvl=0) - screen of lvl story 
+    scene in ImpactuX"""
     i_exit=functions.iExit() #button functions
     i_run=functions.iRun()
     i_setup=functions.iSetup()
@@ -90,10 +91,13 @@ def mainrun(scr_params=((640,480),0,32), lvl=0):
     objects.t_button(295,430, "Cancel", i_setup, f_s, b_s, white, red), \
     objects.t_button(555,430, "EXIT", i_exit, f_s, b_s, black, red)]
     
-    textlabels = [objects.t_label(55, 380, l_text, i_exit, 22, 1, blue, yellow), \
+    textbuttons = objects.WidgetsPack(30, 430, 240, True, textbuttons)
+
+    textlabels = [objects.t_label(20, 380, l_text, i_exit, 16, 1, blue, yellow), \
     objects.t_label(270, 230, "ImpactuX", i_exit, 32, 1, red, None)]
+
     
-#    objects.t_button(315,240, "EXIT", ending_play, 20, 5, black, red)]
+    
     font1=pygame.font.Font("."+os.sep+"fonts"+os.sep+"LiberationSans-Regular.ttf", 18)
     
     pygame.display.set_caption("ImpactuX story "+str(lvl+1))
@@ -119,13 +123,13 @@ def mainrun(scr_params=((640,480),0,32), lvl=0):
 
             elif event.type == MOUSEBUTTONDOWN:
                 x_n0,y_n0=event.pos
-                check_tb=button_press_checking(x_n0,y_n0, textbuttons)
+                check_tb=button_press_checking(x_n0,y_n0, textbuttons.w_list)
                 if check_tb[0]:
                     check_tb[1].ch_state(event.type)
     
             elif event.type == MOUSEMOTION:
                 x_n0,y_n0=event.pos
-                check_tb=button_press_checking(x_n0,y_n0, textbuttons)
+                check_tb=button_press_checking(x_n0,y_n0, textbuttons.w_list)
                 if check_tb[0]:
                     check_tb[1].ch_state(event.type)
 
@@ -133,14 +137,16 @@ def mainrun(scr_params=((640,480),0,32), lvl=0):
                 if int(event.button) == 1:
                     x_n0,y_n0=event.pos
                     
-                    check_tb=button_press_checking(x_n0,    y_n0, textbuttons)
+                    check_tb=button_press_checking(x_n0, y_n0, textbuttons.w_list)
                     if check_tb[0]:
                         check_tb[1].ch_state(event.type)
                         return check_tb[1].doing()
                        
         screen.blit(background, (0,0))
         
-        for b_obj in textbuttons:
+        #textbuttons.show_at(screen)
+        
+        for b_obj in textbuttons.w_list:
             b_obj.show_at(screen)
 
         for b_obj in textlabels:

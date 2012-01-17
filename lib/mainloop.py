@@ -57,7 +57,9 @@ class scenes_run():
                 else:
                     #start play screen
                     game_pass = runI.mainrun(functions.get_screen_set(), \
-                    self.game_lvl, self.balls_pos, self.g_time, self.g_score)
+                    self.game_lvl, None, 0, self.g_score)
+#                    game_pass = runI.mainrun(functions.get_screen_set(), \
+#                    self.game_lvl, self.balls_pos, self.g_time, self.g_score)
                     if game_pass["exit"]:
                         return  "exit"
                     if game_pass["run"]:

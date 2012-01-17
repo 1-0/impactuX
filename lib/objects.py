@@ -307,6 +307,7 @@ class t_button:
             plato.blit(self.font_pic, (self.pos_x+self.border_size, self.pos_y))
         elif self.state==2:
             plato.blit(self.font_pic, (self.pos_x, self.pos_y+self.border_size))
+        #print "x---y "+ str(self.pos_x) + " --- " + str(self.pos_y)
         
     def check_in(self, c_coordx, c_coordy):
         self.mouse_in=sqcheck.CheckRectPoint(self.pos_x, self.pos_y, self.width, self.height, c_coordx, c_coordy)
@@ -331,7 +332,7 @@ class t_label(t_button):
         if self.color:
             pygame.draw.rect(plato, self.color, (self.pos_x, self.pos_y, self.width, self.height), 0)
         plato.blit(self.font_pic, (self.pos_x+self.border_size, self.pos_y+self.border_size))
-        3
+        
     
     def check_in(self, c_coordx, c_coordy):
         pass
@@ -377,7 +378,92 @@ class ObjList(object):
         for ooo in self.o_list:
             aim_obj.blit(ooo.picture,(ooo.pos_x,ooo.pos_x))
 
+class WidgetsPack():
+    def __init__(self, pos_x=0, pos_y=0, w_size=5, h_alignment=True, start_list=[]):
+        self.pos_x=pos_x
+        self.pos_y=pos_y
+        self.width=0
+        self.height=0
+        self.w_size=w_size#size betwin 2 objects centers
+        self.h_alignment=h_alignment
+        self.w_list=[]
         
+        self.add_list(start_list)
+        
+    def __len__(self):
+        return len(self.w_list)
+        
+    def __getitem__(self, nnn):
+        if self.w_list<>[]:
+            return self.w_list(nnn)
+        
+
+    def add_list(self, list_w):
+        lll=len(list_w)
+        if  lll>0:
+            if len(self.w_list)==0:
+                self.height=list_w[0].height
+                self.width=list_w[0].width
+                list_w[0].pos_x=self.pos_x
+                list_w[0].pos_y=self.pos_y
+                self.w_list.append(list_w[0])
+                list_w=list_w[1:]
+            
+            for wig in list_w:
+                self.add_wig(wig)
+
+    def add_wig(self, n_wig):
+        if self.h_alignment:
+            n_wig.pos_x = self.w_list[-1].pos_x+(self.w_list[-1].width)/2+self.w_size-(n_wig.width)/2
+            self.width = n_wig.pos_x + n_wig.width - self.pos_x
+            if n_wig.height>self.height:
+                n_wig.pos_y=self.pos_y
+                self.height=n_wig.height
+                self.y_centrize_list()
+            else:
+                self.centrize_y(n_wig)
+        else:
+            n_wig.pos_y = self.w_list[-1].pos_y+(self.w_list[-1].height)/2+self.w_size-(n_wig.height)/2
+            #n_wig.pos_y = self.pos_y+self.height+self.w_size
+            self.height = n_wig.pos_y + n_wig.height - self.pos_y
+            if n_wig.width>self.width:
+                n_wig.pos_x=self.pos_x
+                self.width=n_wig.width
+                self.x_centrize_list()
+            else:
+                self.centrize_x(n_wig)
+        self.w_list.append(n_wig)
+            
+    def y_centrize_list(self):
+        for wig in self.w_list:
+            self.centrize_y(wig)
+            
+    def centrize_y(self, c_wig):
+        dy = (self.height-c_wig.height)/2
+        c_wig.pos_y=self.pos_y+dy
+        #print "y - "+str(c_wig.pos_y)
+
+    def x_centrize_list(self):
+        for wig in self.w_list:
+            self.centrize_x(wig)
+            
+    def centrize_x(self, c_wig):
+        dx = (self.width-c_wig.width)/2
+        c_wig.pos_x=self.pos_x+dx
+        #print "x - "+str(c_wig.pos_x)
+        
+    def show_at(self, plato):
+        for wig in self.w_list:
+            wig,show_at(plato)
+            
+    def check_in(self, c_coordx, c_coordy):
+        for wig in self.w_list:
+            wig,check_in(c_coordx, c_coordy)
+            
+    def ch_state(self, event_type):
+        for wig in self.w_list:
+            ch_stete(event_type)
+
 if __name__ == '__main__':
     game = Game()
     game.run()
