@@ -26,7 +26,7 @@ import pygame, os
 import sqcheck
 import impact
 #import functions 
-from pygame.locals import *
+from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, MOUSEMOTION, MOUSEBUTTONUP, KEYDOWN #, FULLSCREEN
 
 def dsign(x):
     if x >= 0: 
@@ -454,15 +454,15 @@ class WidgetsPack():
         
     def show_at(self, plato):
         for wig in self.w_list:
-            wig,show_at(plato)
+            wig.show_at(plato)
             
     def check_in(self, c_coordx, c_coordy):
         for wig in self.w_list:
-            wig,check_in(c_coordx, c_coordy)
+            wig.check_in(c_coordx, c_coordy)
             
     def ch_state(self, event_type):
         for wig in self.w_list:
-            ch_stete(event_type)
+            wig.ch_state(event_type)
 
 if __name__ == '__main__':
     game = Game()

@@ -20,8 +20,8 @@
 #       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #       MA 02110-1301, USA.
 
-import pygame, sys, os
-from pygame.locals import *
+import pygame, os
+from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, MOUSEMOTION, MOUSEBUTTONUP #, FULLSCREEN
 import objects, functions 
 
 
@@ -59,7 +59,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0):
     i_run=functions.iRun()
     i_setup=functions.iSetup()
     
-    ending_play=functions.Ending_play()
+    #ending_play=functions.Ending_play()
     button_press_checking=functions.Button_press_checking()
     
     #init vars
@@ -69,14 +69,14 @@ def mainrun(scr_params=((640,480),0,32), lvl=0):
     
     white = (255, 255, 255)
     red = (255, 0, 0)
-    green = (0, 255, 0)
+    #green = (0, 255, 0)
     blue = (0, 0, 255)
     yellow = (255, 255, 0)
     black=(0, 0, 0)
     #print lvl
     bgif="."+os.sep+"pic"+os.sep+"bg_story_"+str(lvl)+".jpg"
     
-    soif1="."+os.sep+"sounds"+os.sep+"s1.ogg"
+    #soif1="."+os.sep+"sounds"+os.sep+"s1.ogg"
     
     l_text = get_text_lvl(lvl)
     
@@ -98,7 +98,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0):
 
     
     
-    font1=pygame.font.Font("."+os.sep+"fonts"+os.sep+"LiberationSans-Regular.ttf", 18)
+    #font1=pygame.font.Font("."+os.sep+"fonts"+os.sep+"LiberationSans-Regular.ttf", 18)
     
     pygame.display.set_caption("ImpactuX story "+str(lvl+1))
     
@@ -146,8 +146,11 @@ def mainrun(scr_params=((640,480),0,32), lvl=0):
         
         #textbuttons.show_at(screen)
         
-        for b_obj in textbuttons.w_list:
-            b_obj.show_at(screen)
+        textbuttons.show_at(screen)
+        
+        #textlabels.show_at(screen)
+        #for b_obj in textbuttons.w_list:
+            #b_obj.show_at(screen)
 
         for b_obj in textlabels:
             b_obj.show_at(screen)

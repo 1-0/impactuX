@@ -36,6 +36,7 @@ class scenes_run():
         self.set_zero()
 
     def set_zero(self):
+        """set_zero(self) ininialize zero game setings"""
         self.g_lvl = 0
         self.game_lvl = 0
         self.g_time = 0
@@ -43,6 +44,7 @@ class scenes_run():
         self.balls_pos = None
         
     def runing_game(self):
+        """runing_game(self) start plaing"""
         game_runing = True
         while game_runing:
             #start story screen
@@ -53,6 +55,7 @@ class scenes_run():
                     game_runing = False
                     return  "exit"
                 if story_pass=="setup_game":
+                    setupI.mainrun()
                     return 0
                 else:
                     #start play screen
@@ -75,7 +78,7 @@ class scenes_run():
             else:
                 game_runing = False
         #start "The End" screen
-        winI.mainrun(functions.get_screen_set(), g_res, \
+        endI.mainrun(functions.get_screen_set(), g_res, \
         self.g_score, self.g_time)
                 
         sss = self.g_score
@@ -84,6 +87,7 @@ class scenes_run():
         return sss
 
     def mainrun(self):
+        """mainrun(self) - main game screens class loop"""
         #start menu screen
         scene_i = menuI.mainrun(functions.get_screen_set()) #[next_window, exit_results]
         if scene_i == "exit":
@@ -118,7 +122,8 @@ class scenes_run():
                 self.runing = False
                 return 0
             else:
-                functions.update_setup(setup_result)
+                pass
+                #functions.update_setup(setup_result)
         elif scene_i == "record_game":
             rrr = recordI.mainrun(functions.get_screen_set())#start record screen
             if rrr == "exit":
@@ -126,6 +131,7 @@ class scenes_run():
                 return 0
 
 def mainrun():
+    """mainrun() - main game loop"""
     n_game = scenes_run()
     while n_game.runing:
         n_game.mainrun()

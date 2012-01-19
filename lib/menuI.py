@@ -20,8 +20,8 @@
 #       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #       MA 02110-1301, USA.
 
-import pygame, sys, os
-from pygame.locals import *
+import pygame, os
+from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, MOUSEMOTION, MOUSEBUTTONUP #, FULLSCREEN
 import objects, functions 
 
 ####### init section #######
@@ -33,7 +33,7 @@ def mainrun(scr_params=((640,480),0,32)):
     i_record = functions.iRecord()
     i_restore = functions.iRestore()
     
-    ending_play=functions.Ending_play()
+    #ending_play=functions.Ending_play()
     button_press_checking=functions.Button_press_checking()
     
     #init vars
@@ -44,14 +44,14 @@ def mainrun(scr_params=((640,480),0,32)):
     white = (255, 255, 255)
     red = (255, 0, 0)
     green = (0, 255, 0)
-    blue = (0, 0, 255)
-    yellow = (255, 255, 0)
+    #blue = (0, 0, 255)
+    #yellow = (255, 255, 0)
     black=(0, 0, 0)
     
     bgif="."+os.sep+"pic"+os.sep+"bgstart.jpg"
     i_icon="."+os.sep+"pic"+os.sep+"impactuX.png"
     
-    soif1="."+os.sep+"sounds"+os.sep+"s1.ogg"
+    #soif1="."+os.sep+"sounds"+os.sep+"s1.ogg"
     
     pygame.init()
     
@@ -73,8 +73,9 @@ def mainrun(scr_params=((640,480),0,32)):
     
     #textlabels = [objects.t_label(270, 390, "ImpactuX", i_exit, 32, 1, red, None),]
     textbuttons.add_wig(objects.t_label(270, 390, "ImpactuX", i_exit, 32, 1, red, None))
-#    objects.t_button(315,240, "EXIT", ending_play, 20, 5, black, red)]
-    font1=pygame.font.Font("."+os.sep+"fonts"+os.sep+"LiberationSans-Regular.ttf", 18)
+    #objects.t_button(315,240, "EXIT", ending_play, 20, 5, black, red)]
+
+    #font1=pygame.font.Font("."+os.sep+"fonts"+os.sep+"LiberationSans-Regular.ttf", 18)
     
     pygame.display.set_caption("ImpactuX Menu")
     pygame.display.set_icon(m_icon)
@@ -99,13 +100,13 @@ def mainrun(scr_params=((640,480),0,32)):
 
             elif event.type == MOUSEBUTTONDOWN:
                 x_n0,y_n0=event.pos
-                check_tb=button_press_checking(x_n0,y_n0, textbuttons.w_list)
+                check_tb=button_press_checking(x_n0, y_n0, textbuttons.w_list)
                 if check_tb[0]:
                     check_tb[1].ch_state(event.type)
     
             elif event.type == MOUSEMOTION:
                 x_n0,y_n0=event.pos
-                check_tb=button_press_checking(x_n0,y_n0, textbuttons.w_list)
+                check_tb=button_press_checking(x_n0, y_n0, textbuttons.w_list)
                 if check_tb[0]:
                     check_tb[1].ch_state(event.type)
 
@@ -113,15 +114,16 @@ def mainrun(scr_params=((640,480),0,32)):
                 if int(event.button) == 1:
                     x_n0,y_n0=event.pos
                     
-                    check_tb=button_press_checking(x_n0,    y_n0, textbuttons.w_list)
+                    check_tb=button_press_checking(x_n0, y_n0, textbuttons.w_list)
                     if check_tb[0]:
                         check_tb[1].ch_state(event.type)
                         return check_tb[1].doing()
                        
         screen.blit(background, (0,0))
         
-        for b_obj in textbuttons.w_list:
-            b_obj.show_at(screen)
+        textbuttons.show_at(screen)
+        #for b_obj in textbuttons.w_list:
+        #    b_obj.show_at(screen)
 
         #for b_obj in textlabels:
         #    b_obj.show_at(screen)

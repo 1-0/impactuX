@@ -22,9 +22,9 @@
 
 
 
-import sqcheck, objects
+#import sqcheck, objects
 import pygame, sys
-from pygame.locals import FULLSCREEN
+#from pygame.locals import FULLSCREEN
         
 class iExit:
     def __call__(self):
