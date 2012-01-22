@@ -128,7 +128,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0):
                     check_tb[1].ch_state(event.type)
     
             elif event.type == MOUSEMOTION:
-                x_n0,y_n0=event.pos
+                x_n0, y_n0=event.pos
                 check_tb=button_press_checking(x_n0,y_n0, textbuttons.w_list)
                 if check_tb[0]:
                     check_tb[1].ch_state(event.type)
