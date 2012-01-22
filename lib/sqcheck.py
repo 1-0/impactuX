@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 #       sqcheck.py
-#       
+#       impactuX - tuX collision game
 #       Copyright 2011 10 <1_0 <at> list.ru>
 #       
 #    This program is free software: you can redistribute it and/or modify
@@ -179,11 +179,11 @@ def DirectPart (x1,y1,x2,y2,partscount):
     315***O**45deg
        ********
        ********
-    270***X***90deg
+    270***XX**90deg
+       ***XX***
        ********
        ********
-       ********
-    225******135deg
+    225**180**135deg
 
     """
     xnorm=x2-x1
@@ -198,7 +198,6 @@ def DirectPart (x1,y1,x2,y2,partscount):
         for ppp in range(partscount/2):
             #count for every part fi
             ppptan=math.tan((1+2*ppp)*math.pi/partscount)
-    #        ppptan=math.tan((1+2*ppp)*math.pi/partscount)
             if tan_fi<ppptan:
 #                return ppp
                 return (partscount/2)-ppp
@@ -206,7 +205,6 @@ def DirectPart (x1,y1,x2,y2,partscount):
         for ppp in range((partscount/2),partscount):
             #count for every part fi
             ppptan=math.tan((1+2*ppp)*math.pi/partscount)
-    #        ppptan=math.tan((1+2*ppp)*math.pi/partscount)
             if tan_fi<ppptan:
                 return (partscount/2)+partscount-ppp
 

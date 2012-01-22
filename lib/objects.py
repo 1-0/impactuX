@@ -24,7 +24,8 @@ import pygame, os
 import sqcheck
 import impact
 #import functions 
-from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, MOUSEMOTION, MOUSEBUTTONUP, KEYDOWN #, FULLSCREEN
+from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, \
+MOUSEMOTION, MOUSEBUTTONUP, KEYDOWN #, FULLSCREEN
 
 def dsign(x):
     if x >= 0: 
@@ -239,7 +240,7 @@ class tow_o:
         plato.blit(self.picture, self.coord)
         
 class text_button:
-    """text_button - text button with radius"""
+    """text_button - very simply text button with radius"""
     def __init__ (self, b_coord, b_size, b_color, b_text, b_event, f_color=(0, 0, 0), f_height=18, f_name="."+os.sep+"fonts"+os.sep+"LiberationSans-Regular.ttf"):
         self.pos_x=b_coord[0]
         self.pos_y=b_coord[1]

@@ -19,8 +19,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import pygame, os
-from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, MOUSEMOTION, MOUSEBUTTONUP #, FULLSCREEN
+from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, \
+MOUSEMOTION, MOUSEBUTTONUP #, FULLSCREEN
 import objects, functions 
+from colors import *
 
 ####### init section #######
 def mainrun(scr_params=((640,480),0,32)):
@@ -39,12 +41,12 @@ def mainrun(scr_params=((640,480),0,32)):
     f_s = 20 #font size
     b_s = 5 #border size
     
-    white = (255, 255, 255)
-    red = (255, 0, 0)
-    green = (0, 255, 0)
-    #blue = (0, 0, 255)
-    #yellow = (255, 255, 0)
-    black=(0, 0, 0)
+    # white = (255, 255, 255)
+    # red = (255, 0, 0)
+    # green = (0, 255, 0)
+    # #blue = (0, 0, 255)
+    # #yellow = (255, 255, 0)
+    # black=(0, 0, 0)
     
     bgif="."+os.sep+"pic"+os.sep+"bgstart.jpg"
     i_icon="."+os.sep+"pic"+os.sep+"impactuX.png"
@@ -60,18 +62,18 @@ def mainrun(scr_params=((640,480),0,32)):
     #m_icon=pygame.image.load(i_icon).convert()
     
     textbuttons = \
-    [objects.t_button(285, 40, "Start game", i_run, f_s, b_s, black, white), \
-    objects.t_button(270,90, "Continue game", i_restore, f_s, b_s, black, green), \
-    objects.t_button(295,140, "Options", i_setup, f_s, b_s, black, white), \
-    objects.t_button(300,190, "Score", i_record, f_s, b_s, black, green), \
-    objects.t_button(305,240, "EXIT", i_exit, f_s, b_s, black, red)]
+    [objects.t_button(285, 40, "Start game", i_run, f_s, b_s, BLACK, WHITE), \
+    objects.t_button(270,90, "Continue game", i_restore, f_s, b_s, BLACK, GREEN), \
+    objects.t_button(295,140, "Options", i_setup, f_s, b_s, BLACK, WHITE), \
+    objects.t_button(300,190, "Score", i_record, f_s, b_s, BLACK, GREEN), \
+    objects.t_button(305,240, "EXIT", i_exit, f_s, b_s, BLACK, RED)]
     
     textbuttons = objects.WidgetsPack(250, 70, 65, False, textbuttons)
     
     
-    #textlabels = [objects.t_label(270, 390, "ImpactuX", i_exit, 32, 1, red, None),]
-    textbuttons.add_wig(objects.t_label(270, 390, "ImpactuX", i_exit, 32, 1, red, None))
-    #objects.t_button(315,240, "EXIT", ending_play, 20, 5, black, red)]
+    #textlabels = [objects.t_label(270, 390, "ImpactuX", i_exit, 32, 1, RED, None),]
+    textbuttons.add_wig(objects.t_label(270, 390, "ImpactuX", i_exit, 32, 1, RED, None))
+    #objects.t_button(315,240, "EXIT", ending_play, 20, 5, BLACK, red)]
 
     #font1=pygame.font.Font("."+os.sep+"fonts"+os.sep+"LiberationSans-Regular.ttf", 18)
     

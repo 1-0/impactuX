@@ -19,8 +19,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import pygame, os
-from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, MOUSEMOTION, MOUSEBUTTONUP #, FULLSCREEN
+from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, \
+MOUSEMOTION, MOUSEBUTTONUP #, FULLSCREEN
 import objects, functions 
+
+from colors import *
 
 
 def get_text_lvl(lvl):
@@ -45,6 +48,8 @@ def get_text_lvl(lvl):
         ttt="Tux protects the airplane from the moon(sol)aris."
     elif lvl==9:
         ttt="Tux protects the NPP from the bmx(qnx)."
+    else:
+        ttt="Tux protects the devices."
     ttt = "Level - "+str(lvl+1)+" - "+ttt
     return ttt
         
@@ -65,14 +70,18 @@ def mainrun(scr_params=((640,480),0,32), lvl=0):
     f_s = 20 #font size
     b_s = 5 #border size
     
-    white = (255, 255, 255)
-    red = (255, 0, 0)
-    #green = (0, 255, 0)
-    blue = (0, 0, 255)
-    yellow = (255, 255, 0)
-    black=(0, 0, 0)
-    #print lvl
-    bgif="."+os.sep+"pic"+os.sep+"bg_story_"+str(lvl)+".jpg"
+    
+    # white = (255, 255, 255)
+    # red = (255, 0, 0)
+    # #green = (0, 255, 0)
+    # blue = (0, 0, 255)
+    # yellow = (255, 255, 0)
+    # black=(0, 0, 0)
+    
+    if lvl in range(10):
+        bgif="."+os.sep+"pic"+os.sep+"bg_story_"+str(lvl)+".jpg"
+    else:
+        bgif="."+os.sep+"pic"+os.sep+"bgstart.jpg"
     
     #soif1="."+os.sep+"sounds"+os.sep+"s1.ogg"
     
@@ -85,14 +94,14 @@ def mainrun(scr_params=((640,480),0,32), lvl=0):
     background=pygame.image.load(bgif).convert()
 
     textbuttons = \
-    [objects.t_button(55, 430, "Start round", i_run, f_s, b_s, black, white), \
-    objects.t_button(295,430, "Cancel", i_setup, f_s, b_s, white, red), \
-    objects.t_button(555,430, "EXIT", i_exit, f_s, b_s, black, red)]
+    [objects.t_button(55, 430, "Start round", i_run, f_s, b_s, BLACK, WHITE), \
+    objects.t_button(295,430, "Cancel", i_setup, f_s, b_s, WHITE, RED), \
+    objects.t_button(555,430, "EXIT", i_exit, f_s, b_s, BLACK, RED)]
     
     textbuttons = objects.WidgetsPack(30, 430, 240, True, textbuttons)
 
-    textlabels = [objects.t_label(20, 380, l_text, i_exit, 16, 1, blue, yellow), \
-    objects.t_label(270, 230, "ImpactuX", i_exit, 32, 1, red, None)]
+    textlabels = [objects.t_label(20, 380, l_text, i_exit, 16, 1, BLUE, YELLOW), \
+    objects.t_label(270, 230, "ImpactuX", i_exit, 32, 1, RED, None)]
 
     
     

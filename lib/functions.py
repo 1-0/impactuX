@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 #       functions.py
-#       
+#       impactuX - tuX collision game
 #       Copyright 2011 10 <1_0 <at> list.ru>
 #       
 #    This program is free software: you can redistribute it and/or modify

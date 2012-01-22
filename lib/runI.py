@@ -21,7 +21,9 @@
 import pygame
 import os
 import objects, functions
-from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, MOUSEMOTION, MOUSEBUTTONUP #, FULLSCREEN
+from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, \
+MOUSEMOTION, MOUSEBUTTONUP #, FULLSCREEN
+from colors import *
 
 def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_score=0):
     """mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_score=0) -
@@ -40,14 +42,14 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
     f_s = 20 #font size
     b_s = 5 #border size
     
-    white = (255, 255, 255)
-    red = (255, 0, 0)
-    green = (0, 255, 0)
-    blue = (0, 0, 255)
-    yellow = (255, 255, 0)
-    #cyan = (0, 255, 255)
-    magenta = (255, 0, 255)
-    black=(0, 0, 0)
+    # white = (255, 255, 255)
+    # red = (255, 0, 0)
+    # green = (0, 255, 0)
+    # blue = (0, 0, 255)
+    # yellow = (255, 255, 0)
+    # cyan = (0, 255, 255)
+    # magenta = (255, 0, 255)
+    # black=(0, 0, 0)
     #print lvl
     bgif="."+os.sep+"pic"+os.sep+"bgplay.jpg"
     
@@ -60,18 +62,18 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
     background=pygame.image.load(bgif).convert()
 
 
-    textlabels = [objects.t_label(530, 10, "ImpactuX", i_exit, 22, 1, red, None), \
-    objects.t_label(540, 40, "Stopped", i_exit, 16, 1, magenta, None), \
-    objects.t_label(540, 40, "Score: 0000", i_exit, 16, 1, blue, white), \
-    objects.t_label(540, 40, "Time: 00:00", i_exit, 16, 1, blue, white), \
-    objects.t_label(540, 40, "Balls: 00", i_exit, 16, 1, blue, white)]
+    textlabels = [objects.t_label(530, 10, "ImpactuX", i_exit, 22, 1, RED, None), \
+    objects.t_label(540, 40, "Stopped", i_exit, 16, 1, MAGENTA, None), \
+    objects.t_label(540, 40, "Score: 0000", i_exit, 16, 1, BLUE, WHITE), \
+    objects.t_label(540, 40, "Time: 00:00", i_exit, 16, 1, BLUE, WHITE), \
+    objects.t_label(540, 40, "Balls: 00", i_exit, 16, 1, BLUE, WHITE)]
     
     textlabels = objects.WidgetsPack(540, 20, 30, False, textlabels)
 
     textbuttons = \
-    [objects.t_button(55, 430, "Run", i_run, f_s, b_s, white, green), \
-    objects.t_button(295,430, "Pause", i_pause, f_s, b_s, blue, yellow), \
-    objects.t_button(555,430, "EXIT", i_exit, f_s, b_s, black, red)]
+    [objects.t_button(55, 430, "Run", i_run, f_s, b_s, MAGENTA, GREEN), \
+    objects.t_button(295,430, "Pause", i_pause, f_s, b_s, BLUE, YELLOW), \
+    objects.t_button(555,430, "EXIT", i_exit, f_s, b_s, BLACK, RED)]
     
     #t_y=textlabels.height+textlabels.pos_y+100
     t_y=345
