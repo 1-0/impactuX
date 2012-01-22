@@ -5,20 +5,18 @@
 #       impactuX - tuX collision game
 #       Copyright 2011 10 <1_0 <at> list.ru>
 #       
-#       This program is free software; you can redistribute it and/or modify
-#       it under the terms of the GNU General Public License as published by
-#       the Free Software Foundation; either version 2 of the License, or
-#       (at your option) any later version.
-#       
-#       This program is distributed in the hope that it will be useful,
-#       but WITHOUT ANY WARRANTY; without even the implied warranty of
-#       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#       GNU General Public License for more details.
-#       
-#       You should have received a copy of the GNU General Public License
-#       along with this program; if not, write to the Free Software
-#       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-#       MA 02110-1301, USA.
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import menuI
 import storyI
@@ -29,14 +27,14 @@ import endI
 import functions
 
 class scenes_run():
-    """scenes_run - class of runing game scenes"""
+    """scenes_run - class of running game scenes"""
     def __init__(self):
         self.runing = True
         self.lvls_count = 10
         self.set_zero()
 
     def set_zero(self):
-        """set_zero(self) ininialize zero game setings"""
+        """set_zero(self) initialize zero game settings"""
         self.g_lvl = 0
         self.game_lvl = 0
         self.g_time = 0
@@ -44,7 +42,7 @@ class scenes_run():
         self.balls_pos = None
         
     def runing_game(self):
-        """runing_game(self) start plaing"""
+        """runing_game(self) start playing"""
         game_runing = True
         while game_runing:
             #start story screen
@@ -63,7 +61,7 @@ class scenes_run():
                     self.game_lvl, None, 0, self.g_score)
 #                    game_pass = runI.mainrun(functions.get_screen_set(), \
 #                    self.game_lvl, self.balls_pos, self.g_time, self.g_score)
-                    if game_pass["exit"]:
+                    if game_pass=="exit":
                         return  "exit"
                     if game_pass["run"]:
                         self.game_lvl += 1

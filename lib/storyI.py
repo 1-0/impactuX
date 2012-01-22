@@ -5,20 +5,18 @@
 #       impactuX - tuX collision game
 #       Copyright 2011 10 <1_0 <at> list.ru>
 #       
-#       This program is free software; you can redistribute it and/or modify
-#       it under the terms of the GNU General Public License as published by
-#       the Free Software Foundation; either version 2 of the License, or
-#       (at your option) any later version.
-#       
-#       This program is distributed in the hope that it will be useful,
-#       but WITHOUT ANY WARRANTY; without even the implied warranty of
-#       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#       GNU General Public License for more details.
-#       
-#       You should have received a copy of the GNU General Public License
-#       along with this program; if not, write to the Free Software
-#       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-#       MA 02110-1301, USA.
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import pygame, os
 from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, MOUSEMOTION, MOUSEBUTTONUP #, FULLSCREEN
@@ -26,11 +24,11 @@ import objects, functions
 
 
 def get_text_lvl(lvl):
-    """get_text_lvl(lvl) - geting story text for lvl"""
+    """get_text_lvl(lvl) - getting story text for level"""
     if lvl==0:
         ttt="Tux protects the MP3-player from the fly(Walk)man."
     elif lvl==1:
-        ttt="Tux protects the smartphone from the white(Black)berry."
+        ttt="Tux protects the smart phone from the white(Black)berry."
     elif lvl==2:
         ttt="Tux protects the tablet from the pine(apple)."
     elif lvl==3:
@@ -53,7 +51,7 @@ def get_text_lvl(lvl):
     
 
 def mainrun(scr_params=((640,480),0,32), lvl=0):
-    """mainrun(scr_params=((640,480),0,32), lvl=0) - screen of lvl story 
+    """mainrun(scr_params=((640,480),0,32), lvl=0) - screen of level story 
     scene in ImpactuX"""
     i_exit=functions.iExit() #button functions
     i_run=functions.iRun()
@@ -148,10 +146,6 @@ def mainrun(scr_params=((640,480),0,32), lvl=0):
         
         textbuttons.show_at(screen)
         
-        #textlabels.show_at(screen)
-        #for b_obj in textbuttons.w_list:
-            #b_obj.show_at(screen)
-
         for b_obj in textlabels:
             b_obj.show_at(screen)
     
