@@ -22,29 +22,25 @@
 import pygame, sys
 #from pygame.locals import FULLSCREEN
         
-class iPause:
-    def __call__(self):
-        return "pause"
-        
 class iExit:
     def __call__(self):
         return "exit"
         
 class iRun:
     def __call__(self):
-        return "run_game"
+        return "run"
         
 class iRestore:
     def __call__(self):
-        return "restore_game"
+        return "restore"
 
 class iSetup:
     def __call__(self):
-        return "setup_game"
+        return "setup"
 
 class iRecord:
     def __call__(self):
-        return "record_game"
+        return "record"
         
 class Deltax:
     def __call__(self, pic_obj):
@@ -81,6 +77,11 @@ class Let_addin_press_checking:
             if p_obj.check_in(cour_x+delt_r, cour_y+delt_r, delt_r):
                 return True 
         return False
+    
+def sec_to_minute(sec):
+    minute = sec/60
+    seconde = sec-(minute*60)
+    return minute, seconde
 
 def get_screen_set():
     return (640,480),0,32

@@ -52,7 +52,7 @@ class scenes_run():
                 if story_pass=="exit":
                     game_runing = False
                     return  "exit"
-                if story_pass=="setup_game":
+                if story_pass=="setup":
                     setupI.mainrun()
                     return 0
                 else:
@@ -63,7 +63,9 @@ class scenes_run():
 #                    self.game_lvl, self.balls_pos, self.g_time, self.g_score)
                     if game_pass=="exit":
                         return  "exit"
-                    if game_pass["run"]:
+                    elif game_pass=="setup":
+                        return  0
+                    elif game_pass["run"]:
                         self.game_lvl += 1
                         self.g_score = game_pass["score"]
                         self.g_time = 0
@@ -92,7 +94,7 @@ class scenes_run():
             #functions.exit_game()
             self.runing = False
             return 0
-        elif scene_i == "run_game":
+        elif scene_i == "run":
             self.game_lvl = self.g_lvl
             game_result = self.runing_game()
             if game_result == "exit":
@@ -103,7 +105,7 @@ class scenes_run():
             else:
                 #functions.update_records(game_result)
                 pass
-        elif scene_i == "restore_game":
+        elif scene_i == "restore":
             self.game_lvl=self.g_lvl+1
             game_result = self.runing_game()
             if game_result == "exit":
@@ -114,7 +116,7 @@ class scenes_run():
             else:
                 #functions.update_records(game_result)
                 pass
-        elif scene_i == "setup_game":
+        elif scene_i == "setup":
             setup_result = menuI.mainrun(functions.get_screen_set())#start setup screen
             if setup_result == "exit":
                 self.runing = False
@@ -122,7 +124,7 @@ class scenes_run():
             else:
                 pass
                 #functions.update_setup(setup_result)
-        elif scene_i == "record_game":
+        elif scene_i == "record":
             rrr = recordI.mainrun(functions.get_screen_set())#start record screen
             if rrr == "exit":
                 self.runing = False

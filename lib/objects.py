@@ -275,9 +275,10 @@ class text_button:
 class t_button:
     """text_button - text button with border size"""
     def __init__ (self, pos_x, pos_y, b_text, b_event, f_height=18, \
-    border_size=1, f_color=(0, 0, 0), b_color=(255, 255, 255), \
+    border_size=1, f_color=(0, 0, 0), b_color=(255, 255, 255), t_name=None, \
     f_name="."+os.sep+"fonts"+os.sep+"LiberationSans-Regular.ttf"):
-        self.state=0
+        self.t_name = t_name
+        self.state = 0
         self.pos_x = pos_x
         self.pos_y = pos_y
         self.border_size = border_size
@@ -395,8 +396,18 @@ class WidgetsPack():
     def __getitem__(self, nnn):
         if self.w_list<>[]:
             return self.w_list(nnn)
-        
 
+    def set_named_obj_str(self, o_name, new_str):
+        for ooo in self.w_list:
+            if ooo.t_name == o_name:
+                ooo.set_text(new_str)
+                if self.h_alignment:
+                    self.y_centrize_list()
+                else:
+                    self.x_centrize_list()
+                return True
+        return False
+        
     def add_list(self, list_w):
         lll=len(list_w)
         if  lll>0:

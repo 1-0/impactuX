@@ -70,14 +70,6 @@ def mainrun(scr_params=((640,480),0,32), lvl=0):
     f_s = 20 #font size
     b_s = 5 #border size
     
-    
-    # white = (255, 255, 255)
-    # red = (255, 0, 0)
-    # #green = (0, 255, 0)
-    # blue = (0, 0, 255)
-    # yellow = (255, 255, 0)
-    # black=(0, 0, 0)
-    
     if lvl in range(10):
         bgif="."+os.sep+"pic"+os.sep+"bg_story_"+str(lvl)+".jpg"
     else:
