@@ -20,6 +20,7 @@
 
 #import copy
 #import math
+import time
 import pygame, os
 import sqcheck
 import impact
@@ -74,9 +75,19 @@ class RectObjSet():
 
 class AnimationObj(pygame.sprite.Sprite):
     """AnimationObj() - class to use animated objects on sprites"""
-    def __init__(self, listpng, pos_x=111, pos_y=111, dx=10, dy=5, delay=1, fff=0, direct=1, picname="rock"):
+    def __init__(self, listpng, pos_x=111, pos_y=111, dx=10, dy=5,\
+                  delay=1, fff=0, direct=1, picname="rock", \
+                  starting_time=0, borders=(25,25,615,455), stopped = True):
         
         pygame.sprite.Sprite.__init__(self)
+        
+        self.time_to_start = starting_time
+        self.stopped = stopped
+        self.init_time = time.time()
+        if starting_time==0:
+            self.runing = True
+        else:
+            self.runing = False
 
         self.picname=picname
         self.loadImages(listpng)
@@ -88,13 +99,13 @@ class AnimationObj(pygame.sprite.Sprite):
         self.delay = delay
         self.pause = 0
         
+        self.xmin=borders[0]
+        self.ymin=borders[1]
+        self.xmax=borders[2]
+        self.ymax=borders[3]
         self.pos_x=pos_x
-        self.xmax=615
-        self.xmin=25
         self.dx=dx
         self.pos_y=pos_y
-        self.ymax=455
-        self.ymin=25
         self.dy = dy
         self.new_dx = None
         self.new_dy = None
@@ -123,20 +134,33 @@ class AnimationObj(pygame.sprite.Sprite):
             impact_wall = True
         return impact_wall
         
+    def check_runing(self):
+        ttt=time.time()
+        self.time_to_start = self.time_to_start-(ttt-self.init_time)
+        if self.time_to_start<=0:
+            self.runing = True
 
     def update(self, o_list=None):
-        self.pause += 1
-        if self.pause >= self.delay:
-            #reset pause and advance animation
-            self.pause = 0
-            self.frame += self.direct
-            if abs(self.frame) >= len(self.setImages):
-                self.frame = 0
-            self.image = self.setImages[self.frame]
+        if not(self.runing):
+            self.check_runing()
+
+        if not(self.stopped):
+            
+            self.pause += 1
+            if self.pause >= self.delay:
+                #reset pause and advance animation
+                self.pause = 0
+                self.frame += self.direct
+                if abs(self.frame) >= len(self.setImages):
+                    self.frame = 0
+                self.image = self.setImages[self.frame]
             
             #######start move
-            self.o_move(o_list)
-            self.rect.center = (self.pos_x, self.pos_y)
+                if self.runing:
+                    self.o_move(o_list)
+                    self.rect.center = (self.pos_x, self.pos_y)
+        else:
+            pass
         
     def loadImages(self, pnglistname):
         self.setImages = pnglistname.getadd(self.picname, 10)
@@ -146,11 +170,12 @@ class AnimationObj(pygame.sprite.Sprite):
     def impact(self, a_sprites):
         """impact(self, a_sprites) eval new speed - dx dy movo1+m2vo2
         +...=m1vn1+m2vn2+... all m=1"""
-        for bbb in a_sprites:
-            if bbb<>self and (not(self.new_dx)):
-                if sqcheck.CheckRound (bbb.pos_x, bbb.pos_y, bbb.radius, self.pos_x, self.pos_y, self.radius):
-                    #self.nnnx,self.nnny=bbb.pos_x,bbb.pos_y
-                    self.new_dx,self.new_dy,bbb.new_dx,bbb.new_dy=impact.sqImpact(self.pos_x, self.pos_y, self.dx, self.dy, bbb.pos_x, bbb.pos_y, bbb.dx, bbb.dy)
+        if self.run and not(self.stopped):
+            for bbb in a_sprites:
+                if bbb<>self and (not(self.new_dx)):
+                    if sqcheck.CheckRound (bbb.pos_x, bbb.pos_y, bbb.radius, self.pos_x, self.pos_y, self.radius):
+                        #self.nnnx,self.nnny=bbb.pos_x,bbb.pos_y
+                        self.new_dx,self.new_dy,bbb.new_dx,bbb.new_dy=impact.sqImpact(self.pos_x, self.pos_y, self.dx, self.dy, bbb.pos_x, bbb.pos_y, bbb.dx, bbb.dy)
 
     def new_speed(self):
         if self.new_dx:
@@ -238,39 +263,6 @@ class tow_o:
 
     def show_at(self, plato):
         plato.blit(self.picture, self.coord)
-        
-class text_button:
-    """text_button - very simply text button with radius"""
-    def __init__ (self, b_coord, b_size, b_color, b_text, b_event, f_color=(0, 0, 0), f_height=18, f_name="."+os.sep+"fonts"+os.sep+"LiberationSans-Regular.ttf"):
-        self.pos_x=b_coord[0]
-        self.pos_y=b_coord[1]
-        self.width=b_size[0]
-        self.height=b_size[1]
-        self.coord=b_coord
-        self.color=b_color
-        self.xradius=b_size[0]/2
-        self.yradius=b_size[1]/2
-        self.font=pygame.font.Font(f_name, f_height)
-        self.fontcolor=f_color
-        self.text=b_text
-        
-        self.doing=b_event
-        
-    def __getitem__(self,x):
-        return self.coord, -1
-        
-    def show_at(self, plato):
-        f1=self.font
-        pygame.draw.rect(plato, self.color, (self.pos_x, self.pos_y, self.width, self.height), 0)
-        # plato.blit.rrr
-        plato.blit(f1.render(self.text, True, self.fontcolor), (self.pos_x+2, self.pos_y+2))
-        
-    def check_in(self, c_coordx, c_coordy):
-        rox=self.width/2
-        roy=self.height/2
-        return sqcheck.CheckRectangle (self.pos_x+(rox), self.pos_y+(roy), rox, roy, c_coordx, c_coordy, 0, 0)
-        
-    def ch_state(self, event_type): pass
         
 class t_button:
     """text_button - text button with border size"""
@@ -364,19 +356,6 @@ class Game(object):
                 if event.key == K_ESCAPE:
                     return False
         return True
-
-class ObjList(object):
-    def __init__(self, obj_type=0, start_list=[]):
-        self.o_list=start_list
-        self.o_type=obj_type
-
-    def put_obj(self, aim_obj):
-        for ooo in self.o_list:
-            aim_obj.blit(ooo.picture,(ooo.pos_x,ooo.pos_x))
-        
-    def ch_obj(self, aim_obj):
-        for ooo in self.o_list:
-            aim_obj.blit(ooo.picture,(ooo.pos_x,ooo.pos_x))
 
 class WidgetsPack():
     def __init__(self, pos_x=0, pos_y=0, w_size=5, h_alignment=True, start_list=[]):

@@ -19,6 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import pygame
+import random
 import os
 import time
 import objects, functions
@@ -26,7 +27,7 @@ from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, \
 MOUSEMOTION, MOUSEBUTTONUP #, FULLSCREEN
 from colors import *
 
-def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_score=0):
+def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_score=0, n_balls=55):
     """mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_score=0) -
     screen of level play scene in ImpactuX"""
     pygame.init()
@@ -56,12 +57,36 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
     time_in_game = g_time
     m_time = functions.sec_to_minute(g_time)
 
+    pngs = objects.LoadedObj("."+os.sep+"pic")
+    
+    bbb=[]
+    x_min,y_min,x_max,y_max=10,10,525,470
+    dx_min,dy_min,dx_max,dy_max=1,1,10,10
+    dxy=30
+    if balls_pos:
+        n_balls=len(balls_pos)
+        for iii in balls_pos:
+            bbb.append(objects.AnimationObj(pngs, iii[0], \
+                                            iii[1], \
+                                            iii[2], \
+                                            iii[3], 1, 0,\
+                                            iii[4], "rock", 0, \
+                                            (x_min, y_min, x_max, y_max), True))
+    else:
+        for iii in range(n_balls):
+            bbb.append(objects.AnimationObj(pngs, random.choice(range(x_min+dxy,x_max-dxy)), \
+                                            random.choice(range(y_min+dxy,y_max-dxy)), \
+                                            random.choice(range(dx_min,dx_max)), \
+                                            random.choice(range(dy_min,dy_max)), 1, 0,\
+                                            random.choice(range(-1,1)), "rock", 0, \
+                                            (x_min, y_min, x_max, y_max), True))
+    
     textlabels = [objects.t_label(530, 10, "ImpactuX", i_exit, 22, 1, RED, None), \
     objects.t_label(540, 40, "Paused", i_exit, 16, 1, MAGENTA, None, "status"), \
     objects.t_label(540, 40, "Level: "+str(lvl+1), i_exit, 16, 1, BLUE, WHITE), \
     objects.t_label(540, 40, "Score: "+str(g_score), i_exit, 16, 1, BLUE, WHITE, "score"), \
     objects.t_label(540, 40, "Time: "+str(m_time[0])+":"+str(m_time[1]), i_exit, 16, 1, BLUE, WHITE, "time"), \
-    objects.t_label(540, 40, "Balls: 00", i_exit, 16, 1, BLUE, WHITE, "balls")]
+    objects.t_label(540, 40, "Balls: "+str(n_balls), i_exit, 16, 1, BLUE, WHITE, "balls")]
     
     textlabels = objects.WidgetsPack(540, 20, 30, False, textlabels)
 
@@ -74,21 +99,20 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
     t_y=345
     
     textbuttons = objects.WidgetsPack(560, t_y, 45, False, textbuttons)
-   
     
     #font1=pygame.font.Font("."+os.sep+"fonts"+os.sep+"LiberationSans-Regular.ttf", 18)
+    allSprites = pygame.sprite.Group(bbb)
+    print allSprites
     
     pygame.display.set_caption("ImpactuX run. Level "+str(lvl+1))
-    
     clock = pygame.time.Clock()
-    
     run_now = True
     start_runing = False
-    last_time = time.clock()
+    last_time = time.time()
 
 ####### main loop section #######
     while run_now:
-        clock.tick(50) 
+        clock.tick(30) 
         #t=pygame.time.delay(100)
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -126,15 +150,19 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                             if start_runing:
                                 textbuttons.set_named_obj_str("run", "Pause")
                                 textlabels.set_named_obj_str("status", "Running")
+                                for o_b in bbb:
+                                    o_b.stopped=False
                             else:
                                 textbuttons.set_named_obj_str("run", "Run")
                                 textlabels.set_named_obj_str("status", "Paused")
+                                for o_b in bbb:
+                                    o_b.stopped=True
                             last_time = time.clock()
                             #print start_runing
                         else:
                             return ddd
         if start_runing:
-            n_time = time.clock()
+            n_time = time.time()
             d_time = n_time-last_time
             if d_time>=1:
                 last_time = n_time+(d_time- int(d_time))
@@ -146,9 +174,14 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
         
         #showing objects at screen
         screen.blit(background, (0,0))
+        
+        allSprites.update()
+        allSprites.draw(screen)
+        
         textbuttons.show_at(screen)
         textlabels.show_at(screen)
 
+        
         #pygame.display.update()
         pygame.display.flip()
 

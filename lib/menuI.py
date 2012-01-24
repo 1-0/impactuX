@@ -55,7 +55,7 @@ def mainrun(scr_params=((640,480),0,32)):
     #m_icon=pygame.image.load(i_icon).convert()
     
     textbuttons = \
-    [objects.t_button(285, 40, "Start game", i_run, f_s, b_s, BLACK, WHITE), \
+    [objects.t_button(285, 40, "Start new game", i_run, f_s, b_s, BLACK, WHITE), \
     objects.t_button(270,90, "Continue game", i_restore, f_s, b_s, BLACK, GREEN), \
     objects.t_button(295,140, "Options", i_setup, f_s, b_s, BLACK, WHITE), \
     objects.t_button(300,190, "Score", i_record, f_s, b_s, BLACK, GREEN), \
