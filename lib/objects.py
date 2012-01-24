@@ -191,6 +191,13 @@ class AnimationObj(pygame.sprite.Sprite):
 
     def coords(self):
         return self.pos_x, self.pos_y
+    
+    def is_impacted_list(self, ob_list):
+        for o_ob in ob_list:
+            iii = sqcheck.CheckRound(self.pos_x, self.pos_y, self.radius,o_ob.pos_x, o_ob.pos_y, o_ob.radius)
+            if iii:
+                return True
+        return False
 
 class AnimationO(AnimationObj):
     """AnimationObj() - class to use animated objects on sprites"""

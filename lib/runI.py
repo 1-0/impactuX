@@ -27,7 +27,7 @@ from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, \
 MOUSEMOTION, MOUSEBUTTONUP #, FULLSCREEN
 from colors import *
 
-def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_score=0, n_balls=55):
+def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_score=0, n_balls=10):
     """mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_score=0) -
     screen of level play scene in ImpactuX"""
     pygame.init()
@@ -46,6 +46,9 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
     
     bgif="."+os.sep+"pic"+os.sep+"bgplay.jpg"
     
+    moif0="."+os.sep+"pic"+os.sep+"impactuX1.png"
+    mouse_c0=pygame.image.load(moif0).convert_alpha()
+    coursore_type=mouse_c0
     #soif1="."+os.sep+"sounds"+os.sep+"s1.ogg"
     
     pygame.init()
@@ -60,9 +63,9 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
     pngs = objects.LoadedObj("."+os.sep+"pic")
     
     bbb=[]
-    x_min,y_min,x_max,y_max=10,10,525,470
-    dx_min,dy_min,dx_max,dy_max=1,1,10,10
-    dxy=30
+    x_min, y_min, x_max, y_max = 20, 20, 510, 455
+    dx_min, dy_min, dx_max, dy_max = 1, 1, 10, 10
+    dxy = 40
     if balls_pos:
         n_balls=len(balls_pos)
         for iii in balls_pos:
@@ -74,12 +77,24 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                                             (x_min, y_min, x_max, y_max), True))
     else:
         for iii in range(n_balls):
-            bbb.append(objects.AnimationObj(pngs, random.choice(range(x_min+dxy,x_max-dxy)), \
-                                            random.choice(range(y_min+dxy,y_max-dxy)), \
-                                            random.choice(range(dx_min,dx_max)), \
-                                            random.choice(range(dy_min,dy_max)), 1, 0,\
-                                            random.choice(range(-1,1)), "rock", 0, \
-                                            (x_min, y_min, x_max, y_max), True))
+            corrupted_b = True
+            sign_dx=random.choice([-1,1])
+            #bbb1=objects.AnimationObj(pngs, random.choice(xrange(x_min+dxy,x_max-dxy)), \
+            #                                random.choice(xrange(y_min+dxy,y_max-dxy)), \
+            #                                sign_dx*random.choice(xrange(dx_min,dx_max)), \
+            #                                random.choice([-1,1])*random.choice(xrange(dy_min,dy_max)), \
+            #                                1, 0, sign_dx, "rock", 0, \
+            #                                (x_min, y_min, x_max, y_max), True)
+            while corrupted_b:
+                bbb1=objects.AnimationObj(pngs, random.choice(xrange(x_min+dxy,x_max-dxy)), \
+                                            random.choice(xrange(y_min+dxy,y_max-dxy)), \
+                                            sign_dx*random.choice(xrange(dx_min,dx_max)), \
+                                            random.choice([-1,1])*random.choice(xrange(dy_min,dy_max)), \
+                                            1, 0, sign_dx, "rock", 0, \
+                                            (x_min, y_min, x_max, y_max), True)
+                corrupted_b = bbb1.is_impacted_list(bbb)
+            
+            bbb.append(bbb1)
     
     textlabels = [objects.t_label(530, 10, "ImpactuX", i_exit, 22, 1, RED, None), \
     objects.t_label(540, 40, "Paused", i_exit, 16, 1, MAGENTA, None, "status"), \
@@ -109,10 +124,11 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
     run_now = True
     start_runing = False
     last_time = time.time()
+    c_xxx, c_yyy = x_max/2, y_max/2
 
 ####### main loop section #######
     while run_now:
-        clock.tick(30) 
+        clock.tick(50) 
         #t=pygame.time.delay(100)
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -136,6 +152,21 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                 check_tb=button_press_checking(x_n0,y_n0, textbuttons.w_list)
                 if check_tb[0]:
                     check_tb[1].ch_state(event.type)
+        
+                if x_n0<(x_max-mouse_c0.get_width()+20):
+                    if 2<x_n0:
+                        c_xxx = x_n0
+                    else:
+                        c_xxx = 2
+                else:
+                    c_xxx = x_max-mouse_c0.get_width()+20
+                if y_n0<(y_max-mouse_c0.get_height()+20):
+                    if 2<y_n0:
+                        c_yyy = y_n0
+                    else:
+                        c_yyy = 2
+                else:
+                    c_yyy = y_max-mouse_c0.get_height()+20
 
             elif event.type == MOUSEBUTTONUP:
                 if int(event.button) == 1:
@@ -181,6 +212,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
         textbuttons.show_at(screen)
         textlabels.show_at(screen)
 
+        screen.blit(coursore_type,(c_xxx, c_yyy))
         
         #pygame.display.update()
         pygame.display.flip()
