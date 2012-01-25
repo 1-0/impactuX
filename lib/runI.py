@@ -22,12 +22,13 @@ import pygame
 import random
 import os
 import time
+import sqcheck
 import objects, functions
 from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, \
 MOUSEMOTION, MOUSEBUTTONUP #, FULLSCREEN
 from colors import *
 
-def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_score=0, n_balls=10):
+def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_score=0, n_balls=5):
     """mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_score=0) -
     screen of level play scene in ImpactuX"""
     pygame.init()
@@ -64,7 +65,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
     
     bbb=[]
     x_min, y_min, x_max, y_max = 20, 20, 510, 455
-    dx_min, dy_min, dx_max, dy_max = 1, 1, 10, 10
+    dx_min, dy_min, dx_max, dy_max = 1, 1, 2+lvl, lvl+2
     dxy = 40
     if balls_pos:
         n_balls=len(balls_pos)
@@ -79,18 +80,12 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
         for iii in range(n_balls):
             corrupted_b = True
             sign_dx=random.choice([-1,1])
-            #bbb1=objects.AnimationObj(pngs, random.choice(xrange(x_min+dxy,x_max-dxy)), \
-            #                                random.choice(xrange(y_min+dxy,y_max-dxy)), \
-            #                                sign_dx*random.choice(xrange(dx_min,dx_max)), \
-            #                                random.choice([-1,1])*random.choice(xrange(dy_min,dy_max)), \
-            #                                1, 0, sign_dx, "rock", 0, \
-            #                                (x_min, y_min, x_max, y_max), True)
             while corrupted_b:
                 bbb1=objects.AnimationObj(pngs, random.choice(xrange(x_min+dxy,x_max-dxy)), \
                                             random.choice(xrange(y_min+dxy,y_max-dxy)), \
                                             sign_dx*random.choice(xrange(dx_min,dx_max)), \
                                             random.choice([-1,1])*random.choice(xrange(dy_min,dy_max)), \
-                                            1, 0, sign_dx, "rock", 0, \
+                                            .1, 0, sign_dx, "rock", 0, \
                                             (x_min, y_min, x_max, y_max), True)
                 corrupted_b = bbb1.is_impacted_list(bbb)
             
@@ -125,6 +120,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
     start_runing = False
     last_time = time.time()
     c_xxx, c_yyy = x_max/2, y_max/2
+    c_rrr = coursore_type.get_height()/2
 
 ####### main loop section #######
     while run_now:
@@ -149,6 +145,10 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
     
             elif event.type == MOUSEMOTION:
                 x_n0, y_n0=event.pos
+                if x_n0>x_max+20:
+                    pygame.mouse.set_visible(True)
+                else:
+                    pygame.mouse.set_visible(False)
                 check_tb=button_press_checking(x_n0,y_n0, textbuttons.w_list)
                 if check_tb[0]:
                     check_tb[1].ch_state(event.type)
@@ -202,7 +202,26 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                 m_time = functions.sec_to_minute(time_in_game)
                 textlabels.set_named_obj_str("score", "Score: "+str(g_score))
                 textlabels.set_named_obj_str("time", "Time: "+str(m_time[0])+":"+str(m_time[1]))
-        
+                if ((time_in_game/30.0)-int(time_in_game/30))==0:
+                    sign_dx=random.choice([-1,1])
+                    bbb1=objects.AnimationObj(pngs, random.choice(xrange(x_min+dxy,x_max-dxy)), \
+                                            random.choice(xrange(y_min+dxy,y_max-dxy)), \
+                                            sign_dx*random.choice(xrange(dx_min,dx_max)), \
+                                            random.choice([-1,1])*random.choice(xrange(dy_min,dy_max)), \
+                                            .1, 0, sign_dx, "rock", 300, \
+                                            (x_min, y_min, x_max, y_max), False)
+                    bbb.append(bbb1)
+                    n_balls = len(bbb)
+                    if n_balls>10:
+                        print "win"
+                        return "win"
+                    textlabels.set_named_obj_str("balls", "Balls: "+str(n_balls))
+                    allSprites = pygame.sprite.Group(bbb)
+        for b_1 in bbb:
+            ch_loste = sqcheck.CheckRound(c_xxx+c_rrr, c_yyy+c_rrr, c_rrr, b_1.pos_x, b_1.pos_y, b_1.radius)
+            if ch_loste:
+                print "loose"
+                return "loose"
         #showing objects at screen
         screen.blit(background, (0,0))
         

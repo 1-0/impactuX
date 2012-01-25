@@ -141,11 +141,9 @@ class AnimationObj(pygame.sprite.Sprite):
             self.runing = True
 
     def update(self, o_list=None):
-        if not(self.runing):
-            self.check_runing()
-
         if not(self.stopped):
-            
+            if not(self.runing):
+                self.check_runing()
             self.pause += 1
             if self.pause >= self.delay:
                 #reset pause and advance animation
