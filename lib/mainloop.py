@@ -61,20 +61,20 @@ class scenes_run():
                     self.game_lvl, None, 0, self.g_score)
 #                    game_pass = runI.mainrun(functions.get_screen_set(), \
 #                    self.game_lvl, self.balls_pos, self.g_time, self.g_score)
-                    if game_pass=="exit":
+                    if game_pass["exit"]:
                         return  "exit"
-                    elif game_pass=="setup":
-                        return  0
-                    elif game_pass["run"]:
-                        self.game_lvl += 1
-                        self.g_score = game_pass["score"]
-                        self.g_time = 0
-                    elif game_pass["win"]:
-                        g_res = "win"
-                        game_runing = False
-                    else:
+                    elif game_pass["loose"]:
                         g_res = "lose"
                         game_runing = False
+                    elif game_pass["wingame"]:
+                        g_res = "win"
+                        game_runing = False
+                    elif game_pass["winlvl"]:
+                        self.game_lvl += 1
+                        self.g_time = 0
+                        self.g_score=game_pass["score"]
+                    else:
+                        return  0
             else:
                 game_runing = False
         #start "The End" screen
@@ -97,7 +97,7 @@ class scenes_run():
         elif scene_i == "run":
             self.game_lvl = self.g_lvl
             game_result = self.runing_game()
-            if game_result == "exit":
+            if game_result=="exit":
                 self.runing = False
                 return 0
             elif scene_i==0:
@@ -108,7 +108,7 @@ class scenes_run():
         elif scene_i == "restore":
             self.game_lvl=self.g_lvl+1
             game_result = self.runing_game()
-            if game_result == "exit":
+            if game_result=="exit":
                 self.runing = False
                 return 0
             elif scene_i==0:

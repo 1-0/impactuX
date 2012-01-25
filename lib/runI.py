@@ -66,7 +66,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
     bbb=[]
     x_min, y_min, x_max, y_max = 20, 20, 510, 455
     dx_min, dy_min, dx_max, dy_max = 1, 1, 2+lvl, lvl+2
-    dxy = 40
+    dxy = 60
     if balls_pos:
         n_balls=len(balls_pos)
         for iii in balls_pos:
@@ -135,7 +135,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
             if event.type == KEYUP:
                 if event.key == K_ESCAPE:
                     run_now=False
-                    return i_exit()
+                    return {"loose":False, "time":time_in_game, "score":g_score, "win":False, "exit":True}
 
             elif event.type == MOUSEBUTTONDOWN:
                 x_n0,y_n0=event.pos
@@ -190,8 +190,14 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                                     o_b.stopped=True
                             last_time = time.clock()
                             #print start_runing
-                        else:
-                            return ddd
+                        elif ddd == "exit":
+                            print "Exit"
+                            pygame.mouse.set_visible(True)
+                            return {"loose":False, "time":time_in_game, "score":g_score, "winlvl":False, "wingame":False, "exit":True}
+                        elif ddd == "setup":
+                            print "Setup"
+                            pygame.mouse.set_visible(True)
+                            return {"loose":False, "time":time_in_game, "score":g_score, "winlvl":False, "wingame":False, "exit":False}
         if start_runing:
             n_time = time.time()
             d_time = n_time-last_time
@@ -213,15 +219,19 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                     bbb.append(bbb1)
                     n_balls = len(bbb)
                     if n_balls>10:
-                        print "win"
-                        return "win"
+                        print "Win"
+                        pygame.mouse.set_visible(True)
+                        return {"loose":False, "time":time_in_game, "score":g_score, "winlvl":True, "wingame":(lvl==9), "exit":False}
                     textlabels.set_named_obj_str("balls", "Balls: "+str(n_balls))
                     allSprites = pygame.sprite.Group(bbb)
-        for b_1 in bbb:
-            ch_loste = sqcheck.CheckRound(c_xxx+c_rrr, c_yyy+c_rrr, c_rrr, b_1.pos_x, b_1.pos_y, b_1.radius)
-            if ch_loste:
-                print "loose"
-                return "loose"
+                    
+        if start_runing:
+            for b_1 in bbb:
+                ch_loste = sqcheck.CheckRound(c_xxx+c_rrr, c_yyy+c_rrr, c_rrr, b_1.pos_x, b_1.pos_y, b_1.radius)
+                if ch_loste:
+                    print "loose"
+                    pygame.mouse.set_visible(True)
+                    return {"loose":True, "time":time_in_game, "score":g_score, "winlvl":False, "wingame":False, "exit":False}
         #showing objects at screen
         screen.blit(background, (0,0))
         

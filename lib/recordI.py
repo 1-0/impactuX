@@ -18,7 +18,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-def mainrun(scr_params=((640,480),0,32)):
+def mainrun(scr_params=((640,480),0,32),qqq=0,www=0,eee=0,rrr=0):
+    print "rec!!!"
     pass
 
 if __name__ == '__main__':
