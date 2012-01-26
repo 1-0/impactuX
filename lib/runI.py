@@ -222,7 +222,6 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                 textlabels.set_named_obj_str("score", "Score: "+str(g_score))
                 textlabels.set_named_obj_str("time", "Time: "+str(m_time[0])+":"+str(m_time[1]))
                 if ((time_in_game/30.0)-int(time_in_game/30))==0:
-                    n_balls = len(bbb)
                     if n_balls==10:
                         pygame.mouse.set_visible(True)
                         return {"loose":False, "time":time_in_game, "score":g_score, "winlvl":True, "wingame":(lvl==9), "exit":False}
@@ -234,6 +233,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                                             .1, 0, sign_dx, "rock", 300, \
                                             (x_min, y_min, x_max, y_max), False)
                     bbb.append(bbb1)
+                    n_balls = len(bbb)
                     textlabels.set_named_obj_str("balls", "Balls: "+str(n_balls))
                     allSprites = pygame.sprite.Group(bbb)
                     

@@ -28,15 +28,15 @@ from colors import *
 def get_res(g_st, l_v=0):
     if g_st=="wingame":
         bgif = "."+os.sep+"pic"+os.sep+"bgwingame.jpg"
-        ttt = "Congratulations - you won"
+        ttt = "Congratulations - You Won!!!"
         ccc = "The End"
     elif g_st=="winlvl":
         bgif = "."+os.sep+"pic"+os.sep+"bgwin.jpg"
-        ttt = "Congratulations - you passed the level "+str(l_v)
+        ttt = "Congratulations - you pass level "+str(l_v)
         ccc = " Level Passed"
     elif g_st=="loose":
         bgif = "."+os.sep+"pic"+os.sep+"bgloose.jpg"
-        ttt = "You lose at lelel "+str(l_v)
+        ttt = "You lose at level "+str(l_v)
         ccc = "Game Over"
     return {"bg":bgif,"txt":ttt,"caption":ccc}
 
