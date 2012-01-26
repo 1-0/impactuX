@@ -25,7 +25,7 @@ import time
 import sqcheck
 import objects, functions
 from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, \
-MOUSEMOTION, MOUSEBUTTONUP #, FULLSCREEN
+MOUSEMOTION, MOUSEBUTTONUP, K_p, K_PAUSE #, FULLSCREEN
 from colors import *
 
 def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_score=0, n_balls=5):
@@ -85,7 +85,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                                             random.choice(xrange(y_min+dxy,y_max-dxy)), \
                                             sign_dx*random.choice(xrange(dx_min,dx_max)), \
                                             random.choice([-1,1])*random.choice(xrange(dy_min,dy_max)), \
-                                            .1, 0, sign_dx, "rock", 0, \
+                                            1, 0, sign_dx, "rock", 0, \
                                             (x_min, y_min, x_max, y_max), True)
                 corrupted_b = bbb1.is_impacted_list(bbb)
             
@@ -112,7 +112,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
     
     #font1=pygame.font.Font("."+os.sep+"fonts"+os.sep+"LiberationSans-Regular.ttf", 18)
     allSprites = pygame.sprite.Group(bbb)
-    print allSprites
+    #print allSprites
     
     pygame.display.set_caption("ImpactuX run. Level "+str(lvl+1))
     clock = pygame.time.Clock()
@@ -134,8 +134,21 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                 
             if event.type == KEYUP:
                 if event.key == K_ESCAPE:
-                    run_now=False
+                    pygame.mouse.set_visible(True)
                     return {"loose":False, "time":time_in_game, "score":g_score, "win":False, "exit":True}
+                elif event.key==K_p or event.key==K_PAUSE:
+                    start_runing=not(start_runing)
+                    if start_runing:
+                        textbuttons.set_named_obj_str("run", "Pause")
+                        textlabels.set_named_obj_str("status", "Running")
+                        for o_b in bbb:
+                            o_b.stopped=False
+                    else:
+                        textbuttons.set_named_obj_str("run", "Run")
+                        textlabels.set_named_obj_str("status", "Paused")
+                        for o_b in bbb:
+                            o_b.stopped=True
+                    last_time = time.clock()
 
             elif event.type == MOUSEBUTTONDOWN:
                 x_n0,y_n0=event.pos
@@ -191,11 +204,11 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                             last_time = time.clock()
                             #print start_runing
                         elif ddd == "exit":
-                            print "Exit"
+                            #print "Exit"
                             pygame.mouse.set_visible(True)
                             return {"loose":False, "time":time_in_game, "score":g_score, "winlvl":False, "wingame":False, "exit":True}
                         elif ddd == "setup":
-                            print "Setup"
+                            #print "Setup"
                             pygame.mouse.set_visible(True)
                             return {"loose":False, "time":time_in_game, "score":g_score, "winlvl":False, "wingame":False, "exit":False}
         if start_runing:
@@ -204,11 +217,15 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
             if d_time>=1:
                 last_time = n_time+(d_time- int(d_time))
                 time_in_game += 1
-                g_score += 1
+                g_score += (1+lvl)
                 m_time = functions.sec_to_minute(time_in_game)
                 textlabels.set_named_obj_str("score", "Score: "+str(g_score))
                 textlabels.set_named_obj_str("time", "Time: "+str(m_time[0])+":"+str(m_time[1]))
                 if ((time_in_game/30.0)-int(time_in_game/30))==0:
+                    n_balls = len(bbb)
+                    if n_balls==10:
+                        pygame.mouse.set_visible(True)
+                        return {"loose":False, "time":time_in_game, "score":g_score, "winlvl":True, "wingame":(lvl==9), "exit":False}
                     sign_dx=random.choice([-1,1])
                     bbb1=objects.AnimationObj(pngs, random.choice(xrange(x_min+dxy,x_max-dxy)), \
                                             random.choice(xrange(y_min+dxy,y_max-dxy)), \
@@ -217,19 +234,14 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                                             .1, 0, sign_dx, "rock", 300, \
                                             (x_min, y_min, x_max, y_max), False)
                     bbb.append(bbb1)
-                    n_balls = len(bbb)
-                    if n_balls>10:
-                        print "Win"
-                        pygame.mouse.set_visible(True)
-                        return {"loose":False, "time":time_in_game, "score":g_score, "winlvl":True, "wingame":(lvl==9), "exit":False}
                     textlabels.set_named_obj_str("balls", "Balls: "+str(n_balls))
                     allSprites = pygame.sprite.Group(bbb)
                     
         if start_runing:
             for b_1 in bbb:
                 ch_loste = sqcheck.CheckRound(c_xxx+c_rrr, c_yyy+c_rrr, c_rrr, b_1.pos_x, b_1.pos_y, b_1.radius)
+                ch_loste = (ch_loste and b_1.runing)
                 if ch_loste:
-                    print "loose"
                     pygame.mouse.set_visible(True)
                     return {"loose":True, "time":time_in_game, "score":g_score, "winlvl":False, "wingame":False, "exit":False}
         #showing objects at screen
@@ -242,7 +254,6 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
         textlabels.show_at(screen)
 
         screen.blit(coursore_type,(c_xxx, c_yyy))
-        
         #pygame.display.update()
         pygame.display.flip()
 

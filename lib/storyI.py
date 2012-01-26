@@ -55,8 +55,8 @@ def get_text_lvl(lvl):
         
     
 
-def mainrun(scr_params=((640,480),0,32), lvl=0):
-    """mainrun(scr_params=((640,480),0,32), lvl=0) - screen of level story 
+def mainrun(scr_params=((640,480),0,32), lvl=0, g_score=0):
+    """mainrun(scr_params=((640,480),0,32), lvl=0 g_score=0) - screen of level story 
     scene in ImpactuX"""
     i_exit=functions.iExit() #button functions
     i_run=functions.iRun()
@@ -94,6 +94,10 @@ def mainrun(scr_params=((640,480),0,32), lvl=0):
 
     textlabels = [objects.t_label(20, 380, l_text, i_exit, 16, 1, BLUE, YELLOW), \
     objects.t_label(270, 230, "ImpactuX", i_exit, 32, 1, RED, None)]
+    
+    if g_score>0:
+        sss = objects.t_label(270, 310, "Score: "+str(g_score), i_exit, 20, 1, CYAN, None)
+        textlabels.append(sss)
 
     
     

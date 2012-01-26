@@ -32,6 +32,7 @@ class scenes_run():
         self.runing = True
         self.lvls_count = 10
         self.set_zero()
+        #self.g_score = 888
 
     def set_zero(self):
         """set_zero(self) initialize zero game settings"""
@@ -47,7 +48,7 @@ class scenes_run():
         while game_runing:
             #start story screen
             story_pass = storyI.mainrun(functions.get_screen_set(), \
-            self.game_lvl)
+            self.game_lvl, self.g_score)
             if story_pass:
                 if story_pass=="exit":
                     game_runing = False
@@ -64,22 +65,26 @@ class scenes_run():
                     if game_pass["exit"]:
                         return  "exit"
                     elif game_pass["loose"]:
-                        g_res = "lose"
+                        g_res = "loose"
                         game_runing = False
+                        self.g_score=game_pass["score"]
                     elif game_pass["wingame"]:
-                        g_res = "win"
+                        g_res = "wingame"
                         game_runing = False
+                        self.g_score=game_pass["score"]
                     elif game_pass["winlvl"]:
+                        g_res = "winlvl"
                         self.game_lvl += 1
                         self.g_time = 0
                         self.g_score=game_pass["score"]
                     else:
                         return  0
+                endI.mainrun(functions.get_screen_set(), g_res, \
+                self.g_score, self.g_time)
+
             else:
                 game_runing = False
         #start "The End" screen
-        endI.mainrun(functions.get_screen_set(), g_res, \
-        self.g_score, self.g_time)
                 
         sss = self.g_score
         
