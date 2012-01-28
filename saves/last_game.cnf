@@ -1,7 +1,0 @@
-[Last_game]
-cours_prop = None
-game_score = 182
-balls_prop = [[33, 33, 1, 1], [44, 44, 1, -1], [55, 55, 2, 2], [77, 77, -2, 1], [121, 121, 1, -2]]
-game_time = 181
-game_level = 1
-

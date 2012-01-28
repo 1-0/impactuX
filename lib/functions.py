@@ -92,44 +92,52 @@ def sec_to_h(sec):
 def get_screen_set():
     return (640,480),0,32
 
-def save_game(g_score, g_time=None, g_lvl=None, g_balls=None, g_file=None, g_cours=None):
+def save_game(g_score, g_time=None, g_lvl=None, g_balls=None, g_cours=None, g_file="last_game.zicnf", g_section="Last_game", count_rec=6):
     import ConfigParser
-    if g_file:
-        f_name = g_file
-    else:
-        f_name = "last_game.cnf"
+    import gzip
     
-    f_name="."+os.sep+"saves"+os.sep+f_name
+    f_name="."+os.sep+"saves"+os.sep+g_file
     
     config = ConfigParser.RawConfigParser()
     config.add_section('Last_game')
-    config.set('Last_game', 'game_score', str(g_score))
-    config.set('Last_game', 'game_time', str(g_time))
-    config.set('Last_game', 'game_level', str(g_lvl))
-    config.set('Last_game', 'balls_prop', str(g_balls))
-    config.set('Last_game', 'cours_prop', str(g_cours))
+    config.set(g_section, 'game_score', str(g_score))
+    config.set(g_section, 'game_time', str(g_time))
+    config.set(g_section, 'game_level', str(g_lvl))
+    config.set(g_section, 'balls_prop', str(g_balls))
+    config.set(g_section, 'cours_prop', str(g_cours))
     try:
-        with open(f_name, 'wb') as configfile:
-            sss = config.write(configfile)
+        load_new = True
+        num_rec = 0
+        configfile = gzip.open(f_name, 'wb')
+        while load_new:
+            try:
+                sss = config.write(configfile)
+                if num_rec<count_rec:
+                    load_new = False
+                else:
+                    num_rec += 1
+            except:
+                load_new = ()
         configfile.close()
         return sss
     except:
         print "Unexpected error:", sys.exc_info()[0]
         raise
     
-def load_game(f_name="last_game.cnf"):
-    import ConfigParser
+def load_game(f_name="last_game.zicnf", g_section="Last_game"):
+    import RawConfigParserGZ
      
     f_name="."+os.sep+"saves"+os.sep+f_name
-    config = ConfigParser.RawConfigParser()
+    config = RawConfigParserGZ.RawConfigParserGZ()
     try:
         config.read(f_name)
     
-        g_score=eval(config.get('Last_game', 'game_score'))
-        g_time=eval(config.get('Last_game', 'game_time'))
-        g_lvl=eval(config.get('Last_game', 'game_level'))
-        g_balls=eval(config.get('Last_game', 'balls_prop'))
-        g_cours=eval(config.get('Last_game', 'cours_prop'))
+        g_score=eval(config.get(g_section, 'game_score'))
+        g_time=eval(config.get(g_section, 'game_time'))
+        g_lvl=eval(config.get(g_section, 'game_level'))
+        g_balls=eval(config.get(g_section, 'balls_prop'))
+        g_cours=eval(config.get(g_section, 'cours_prop'))
+        #print config.sections()
     
         return g_score, g_time, g_lvl, g_balls, g_cours
     except:
@@ -138,8 +146,9 @@ def load_game(f_name="last_game.cnf"):
     
 if __name__ == '__main__':
     #print get_screen_set()
-    print sec_to_h(3667)
-    #print save_game(182, 181, 1, [[33,33,1,1],[44,44,1,-1],[55,55,2,2],[77,77,-2,1],[121,121,1,-2]])
-    #print load_game()
+    #print sec_to_h(3667)
+    #print save_game(182, 181, 1, [[33,33,1,1],[44,44,1,-1],[55,55,2,2],[77,77,-2,1],[222,222,1,-2],[133,33,1,1],[144,44,1,-1],[155,55,2,2],[177,77,-2,1],[122,222,1,-2]])
+    print save_game(182, 181, 1, [[33,33,1,1],[44,44,1,-1],[55,55,2,2],[77,77,-2,1],[222,222,1,-2]])
+    print load_game()
     pass
 
