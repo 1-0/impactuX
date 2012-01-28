@@ -59,10 +59,11 @@ class scenes_run():
                 else:
                     #start play screen
                     game_pass = runI.mainrun(functions.get_screen_set(), \
-                    self.game_lvl, None, 0, self.g_score)
+                    self.game_lvl, self.balls_pos, self.g_time, self.g_score)
 #                    game_pass = runI.mainrun(functions.get_screen_set(), \
 #                    self.game_lvl, self.balls_pos, self.g_time, self.g_score)
-                    self.game_lvl += 1
+                    self.g_time=0
+                    self.balls_pos=None
                     if game_pass["exit"]:
                         return  "exit"
                     elif game_pass["loose"]:
@@ -74,10 +75,13 @@ class scenes_run():
                         game_runing = False
                         self.g_score=game_pass["score"]
                     elif game_pass["winlvl"]:
+                        self.game_lvl += 1
+                        functions.save_game(game_pass["score"], game_pass["time"], self.game_lvl, game_pass["balls"])
                         g_res = "winlvl"
                         self.g_time = 0
                         self.g_score=game_pass["score"]
                     else:
+                        functions.save_game(game_pass["score"], game_pass["time"], self.game_lvl, game_pass["balls"])
                         return  0
                 endI.mainrun(functions.get_screen_set(), g_res, \
                 self.g_score, self.g_time, self.game_lvl-1)
@@ -111,7 +115,12 @@ class scenes_run():
                 #functions.update_records(game_result)
                 pass
         elif scene_i == "restore":
-            self.game_lvl=self.g_lvl+1
+            lll=functions.load_game()
+            self.game_lvl=lll["level"]
+            self.g_time=lll["time"]
+            self.g_score=lll["score"]
+            self.balls_pos=lll["balls"]
+            #print self.balls_pos
             game_result = self.runing_game()
             if game_result=="exit":
                 self.runing = False

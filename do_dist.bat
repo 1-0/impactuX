@@ -10,10 +10,11 @@ copy "sdl_ttf.dll" ".\dist"
 copy /y ".\pic" ".\dist\pic"
 copy /y ".\fonts" ".\dist\fonts"
 copy /y ".\sounds" ".\dist\sounds"
+copy /y ".\saves" ".\dist\saves"
 
 
 pause
-del "%0"
+REM del "%0"
 
 REM pause
 

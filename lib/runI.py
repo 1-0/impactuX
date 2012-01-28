@@ -28,6 +28,19 @@ from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, \
 MOUSEMOTION, MOUSEBUTTONUP, K_p, K_PAUSE #, FULLSCREEN
 from colors import *
 
+def return_vars(score_g, time_g=0, balls_g=None, loose_g=False, win_g=False, exit_g=False, winlvl_g=False, level_g=0):
+    #return {"loose":False, "time":time_in_game, "score":g_score, "win":False, "exit":True}
+    all_ball=[]
+    if balls_g:
+        for b_1 in balls_g:
+            all_ball.append([b_1.pos_x, b_1.pos_y, b_1.dx, b_1.dy])
+    else:
+        all_ball=None
+        
+    return {"loose":loose_g, "time":time_g, "score":score_g, \
+            "wingame":win_g, "exit":exit_g, "balls":all_ball, \
+            "winlvl":winlvl_g, "level":level_g}
+
 def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_score=0, n_balls=5):
     """mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_score=0) -
     screen of level play scene in ImpactuX"""
@@ -74,7 +87,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                                             iii[1], \
                                             iii[2], \
                                             iii[3], 1, 0,\
-                                            iii[4], "rock", 0, \
+                                            objects.dsign(iii[2]), "rock", 0, \
                                             (x_min, y_min, x_max, y_max), True))
     else:
         for iii in range(n_balls):
@@ -135,7 +148,8 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
             if event.type == KEYUP:
                 if event.key == K_ESCAPE:
                     pygame.mouse.set_visible(True)
-                    return {"loose":False, "time":time_in_game, "score":g_score, "win":False, "exit":True}
+                    return return_vars(score_g=g_score, time_g=time_in_game, balls_g=bbb, exit_g=True)
+                    #return {"loose":False, "time":time_in_game, "score":g_score, "win":False, "exit":True}
                 elif event.key==K_p or event.key==K_PAUSE:
                     start_runing=not(start_runing)
                     if start_runing:
@@ -206,11 +220,11 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                         elif ddd == "exit":
                             #print "Exit"
                             pygame.mouse.set_visible(True)
-                            return {"loose":False, "time":time_in_game, "score":g_score, "winlvl":False, "wingame":False, "exit":True}
+                            return return_vars(score_g=g_score, time_g=time_in_game, balls_g=bbb, exit_g=True, level_g=lvl)
                         elif ddd == "setup":
                             #print "Setup"
                             pygame.mouse.set_visible(True)
-                            return {"loose":False, "time":time_in_game, "score":g_score, "winlvl":False, "wingame":False, "exit":False}
+                            return return_vars(score_g=g_score, time_g=time_in_game, balls_g=bbb, level_g=lvl)
         if start_runing:
             n_time = time.time()
             d_time = n_time-last_time
@@ -224,7 +238,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                 if ((time_in_game/30.0)-int(time_in_game/30))==0:
                     if n_balls==10:
                         pygame.mouse.set_visible(True)
-                        return {"loose":False, "time":time_in_game, "score":g_score, "winlvl":True, "wingame":(lvl==9), "exit":False}
+                        return return_vars(score_g=g_score, time_g=time_in_game, balls_g=bbb, win_g=(lvl==9), winlvl_g=True, level_g=lvl)
                     sign_dx=random.choice([-1,1])
                     bbb1=objects.AnimationObj(pngs, random.choice(xrange(x_min+dxy,x_max-dxy)), \
                                             random.choice(xrange(y_min+dxy,y_max-dxy)), \
@@ -243,7 +257,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                 ch_loste = (ch_loste and b_1.runing)
                 if ch_loste:
                     pygame.mouse.set_visible(True)
-                    return {"loose":True, "time":time_in_game, "score":g_score, "winlvl":False, "wingame":False, "exit":False}
+                    return return_vars(score_g=g_score, time_g=time_in_game, balls_g=bbb, loose_g=True, level_g=lvl)
         #showing objects at screen
         screen.blit(background, (0,0))
         

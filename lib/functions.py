@@ -139,7 +139,8 @@ def load_game(f_name="last_game.zicnf", g_section="Last_game"):
         g_cours=eval(config.get(g_section, 'cours_prop'))
         #print config.sections()
     
-        return g_score, g_time, g_lvl, g_balls, g_cours
+        #print {"score":g_score, "time":g_time, "level":g_lvl, "balls":g_balls, "coursor":g_cours}
+        return {"score":g_score, "time":g_time, "level":g_lvl, "balls":g_balls, "coursor":g_cours}
     except:
         print "Unexpected error:", sys.exc_info()[0]
         raise
@@ -148,7 +149,7 @@ if __name__ == '__main__':
     #print get_screen_set()
     #print sec_to_h(3667)
     #print save_game(182, 181, 1, [[33,33,1,1],[44,44,1,-1],[55,55,2,2],[77,77,-2,1],[222,222,1,-2],[133,33,1,1],[144,44,1,-1],[155,55,2,2],[177,77,-2,1],[122,222,1,-2]])
-    print save_game(182, 181, 1, [[33,33,1,1],[44,44,1,-1],[55,55,2,2],[77,77,-2,1],[222,222,1,-2]])
+    print save_game(182, 181, 1, [[33,33,1,2],[44,44,1,-1],[55,55,2,2],[77,77,-2,1],[222,222,1,-2]])
     print load_game()
     pass
 

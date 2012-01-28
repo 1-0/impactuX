@@ -50,13 +50,16 @@ def mainrun(scr_params=((640,480),0,32)):
     
     screen=pygame.display.set_mode(scr_params[0], scr_params[1], scr_params[2])
     
-    background=pygame.image.load(bgif).convert()
+    pygame.display.set_caption("ImpactuX Menu")
     m_icon=pygame.image.load(i_icon).convert_alpha()
+    pygame.display.set_icon(m_icon)
+    
+    background=pygame.image.load(bgif).convert()
     #m_icon=pygame.image.load(i_icon).convert()
     
     textbuttons = \
     [objects.t_button(285, 40, "Start new game", i_run, f_s, b_s, BLACK, WHITE), \
-    objects.t_button(270,90, "Continue old game", i_restore, f_s, b_s, BLACK, GREEN), \
+    objects.t_button(270,90, "Restore game", i_restore, f_s, b_s, BLACK, GREEN), \
     objects.t_button(295,140, "Options", i_setup, f_s, b_s, BLACK, WHITE), \
     objects.t_button(300,190, "Score", i_record, f_s, b_s, BLACK, GREEN), \
     objects.t_button(305,240, "EXIT", i_exit, f_s, b_s, BLACK, RED)]
@@ -69,9 +72,6 @@ def mainrun(scr_params=((640,480),0,32)):
     #objects.t_button(315,240, "EXIT", ending_play, 20, 5, BLACK, red)]
 
     #font1=pygame.font.Font("."+os.sep+"fonts"+os.sep+"LiberationSans-Regular.ttf", 18)
-    
-    pygame.display.set_caption("ImpactuX Menu")
-    pygame.display.set_icon(m_icon)
     clock = pygame.time.Clock()
     
     run_now = True
