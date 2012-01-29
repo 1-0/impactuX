@@ -381,6 +381,17 @@ class WidgetsPack():
         if self.w_list<>[]:
             return self.w_list(nnn)
 
+    def set_new_pos(self, pos_x, pos_y):
+        if pos_x:
+            self.pos_x = pos_x
+        if pos_y:
+            self.pos_y = pos_y
+        for ooo in self.w_list:
+            if self.h_alignment:
+                self.y_centrize_list()
+            else:
+                self.x_centrize_list()
+
     def set_named_obj_str(self, o_name, new_str):
         for ooo in self.w_list:
             if ooo.t_name == o_name:

@@ -96,12 +96,15 @@ def set_check_rec(new_result, g_file="rec_game.ini", g_section="best_games", cou
     rrr=load_rec(count_rec=10)
     kkk=rrr.keys()
     kkk.sort()
+    ccc=False
     for nnn in kkk:
         r_1=rrr[nnn]
         if r_1[0]<new_result[0]:
-            rrr[nnn]=new_result
-            save_rec(rrr)
-            return True
+            ccc=True
+            rrr[nnn],new_result = new_result,rrr[nnn]
+    if ccc:
+        save_rec(rrr)
+        return True
     return False                                                                                                                                                                                                                        
 
 def load_rec(g_file="rec_game.ini", g_section="best_games", count_rec=10):
@@ -192,8 +195,8 @@ if __name__ == '__main__':
     #print get_screen_set()
     #print sec_to_h(3667)
     #print save_game(182, 181, 1, [[33,33,1,1],[44,44,1,-1],[55,55,2,2],[77,77,-2,1],[222,222,1,-2],[133,33,1,1],[144,44,1,-1],[155,55,2,2],[177,77,-2,1],[122,222,1,-2]])
-    print save_rec({"9":[11,11],"8":[22,22],"7":[33,33],"6":[44,44],"5":[55,55],\
-                    "4":[111,111],"3":[122,122],"2":[133,133],"1":[144,144],"0":[155,155]})
+    print save_rec({"9":[1,1],"8":[2,2],"7":[3,3],"6":[4,4],"5":[5,5],\
+                    "4":[11,11],"3":[12,12],"2":[13,13],"1":[14,14],"0":[15,15]})
     #print set_check_rec([56,56],)
     print load_rec()
     #print save_game(182, 181, 1, [[33,33,1,2],[44,44,1,-1],[55,55,2,2],[77,77,-2,1],[222,222,1,-2]])

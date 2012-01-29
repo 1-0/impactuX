@@ -85,6 +85,12 @@ class scenes_run():
                         return  0
                 endI.mainrun(functions.get_screen_set(), g_res, \
                 self.g_score, self.g_time, self.game_lvl)
+                if game_pass["loose"]:
+                    if functions.set_check_rec([game_pass["score"],\
+                                                game_pass["time"]],):
+                        recordI.mainrun(functions.get_screen_set(),\
+                                        game_pass["score"],\
+                                        game_pass["time"])
 
             else:
                 game_runing = False
