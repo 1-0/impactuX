@@ -141,9 +141,11 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
         #t=pygame.time.delay(100)
         for event in pygame.event.get():
             if event.type == QUIT:
-                i_exit()
+                #i_exit()
                 #ending_play()
-                return i_exit()
+                #return i_exit()
+                pygame.mouse.set_visible(True)
+                return return_vars(score_g=g_score, time_g=time_in_game, balls_g=bbb, exit_g=True)
                 
             if event.type == KEYUP:
                 if event.key == K_ESCAPE:
@@ -236,7 +238,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                 textlabels.set_named_obj_str("score", "Score: "+str(g_score))
                 textlabels.set_named_obj_str("time", "Time: "+str(m_time[0])+":"+str(m_time[1]))
                 if ((time_in_game/30.0)-int(time_in_game/30))==0:
-                    if n_balls==10:
+                    if n_balls>9:
                         pygame.mouse.set_visible(True)
                         return return_vars(score_g=g_score, time_g=time_in_game, balls_g=bbb, win_g=(lvl==9), winlvl_g=True, level_g=lvl)
                     sign_dx=random.choice([-1,1])

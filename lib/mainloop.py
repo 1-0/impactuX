@@ -76,15 +76,15 @@ class scenes_run():
                         self.g_score=game_pass["score"]
                     elif game_pass["winlvl"]:
                         self.game_lvl += 1
-                        functions.save_game(game_pass["score"], game_pass["time"], self.game_lvl, game_pass["balls"])
-                        g_res = "winlvl"
                         self.g_time = 0
+                        functions.save_game(game_pass["score"], 0, self.game_lvl, None)
+                        g_res = "winlvl"
                         self.g_score=game_pass["score"]
                     else:
                         functions.save_game(game_pass["score"], game_pass["time"], self.game_lvl, game_pass["balls"])
                         return  0
                 endI.mainrun(functions.get_screen_set(), g_res, \
-                self.g_score, self.g_time, self.game_lvl-1)
+                self.g_score, self.g_time, self.game_lvl)
 
             else:
                 game_runing = False

@@ -26,13 +26,14 @@ import objects, functions
 from colors import *
 
 def get_res(g_st, l_v=0):
+    l_v += 1
     if g_st=="wingame":
         bgif = "."+os.sep+"pic"+os.sep+"bgwingame.jpg"
         ttt = "Congratulations - You Won!!!"
         ccc = "The End"
     elif g_st=="winlvl":
         bgif = "."+os.sep+"pic"+os.sep+"bgwin.jpg"
-        ttt = "Congratulations - you pass level "+str(l_v)
+        ttt = "Congratulations - you pass to level "+str(l_v)
         ccc = " Level Passed"
     elif g_st=="loose":
         bgif = "."+os.sep+"pic"+os.sep+"bgloose.jpg"
@@ -51,7 +52,7 @@ def mainrun(scr_params=((640,480),0,32), game_status="loose",g_score=0, g_time=0
     f_s = 20 #font size
     b_s = 5 #border size
     
-    end_res = get_res(game_status, lvl+1)
+    end_res = get_res(game_status, lvl)
     
     pygame.init()
     
