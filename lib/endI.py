@@ -26,6 +26,7 @@ import objects, functions
 from colors import *
 
 def get_res(g_st, l_v=0):
+    """get_res(g_st, l_v=0) - getting result param's of end window"""
     l_v += 1
     if g_st=="wingame":
         bgif = "."+os.sep+"pic"+os.sep+"bgwingame.jpg"
