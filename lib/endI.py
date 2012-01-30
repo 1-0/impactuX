@@ -138,4 +138,5 @@ def mainrun(scr_params=((640,480),0,32), game_status="loose",g_score=0, g_time=0
 if __name__ == '__main__':
     runing = True
     while runing:
-        mainrun()
+        mmm=mainrun()
+        runing = (mmm <>"exit")

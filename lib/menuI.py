@@ -20,13 +20,14 @@
 
 import pygame, os
 from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, \
-MOUSEMOTION, MOUSEBUTTONUP #, FULLSCREEN
+MOUSEMOTION, MOUSEBUTTONUP, FULLSCREEN
 import objects, functions 
 from colors import *
 
 ####### init section #######
 def mainrun(scr_params=((640,480),0,32)):
     """mainrun(scr_params=((640,480),0,32)) - screen of main menu ImpactuX"""
+    #print "FULLSCREEN:--- "+str(FULLSCREEN)
     i_exit = functions.iExit() #button functions
     i_run = functions.iRun()
     i_setup = functions.iSetup()
@@ -48,6 +49,7 @@ def mainrun(scr_params=((640,480),0,32)):
     
     pygame.init()
     
+    #screen=pygame.display.set_mode(scr_params[0], FULLSCREEN, scr_params[2])
     screen=pygame.display.set_mode(scr_params[0], scr_params[1], scr_params[2])
     
     pygame.display.set_caption("ImpactuX Menu")
@@ -125,6 +127,7 @@ def mainrun(scr_params=((640,480),0,32)):
         pygame.display.flip()
        
 if __name__ == '__main__':
-    print mainrun()
-
+    while runing:
+        mmm=mainrun()
+        runing = (mmm <>"exit")
 

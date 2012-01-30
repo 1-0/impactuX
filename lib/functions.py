@@ -90,7 +90,27 @@ def sec_to_h(sec):
     return hhh, minute, seconde
 
 def get_screen_set():
-    return (640,480),0,32
+    from pygame.locals import FULLSCREEN
+    sss=get_param(["screen_width", "screen_height", "screen_flags", "screen_depth"], "screen", "conf_game.ini")
+    if sss[2]=="fullscreen":
+        sss[2]=FULLSCREEN
+    return (sss[0],sss[1]),sss[2],sss[3]
+    #return (640,480),0,32
+
+def get_param(p_names, g_section="screen", g_file="conf_game.ini"):
+    import ConfigParser
+    f_name="."+os.sep+"saves"+os.sep+g_file
+    config = ConfigParser.RawConfigParser()
+    try:
+        config.read(f_name)
+        rrr=[]
+        for ppp in p_names:
+            nnn = eval(config.get(g_section, ppp))
+            rrr.append(nnn)
+        return rrr
+    except:
+        print "Unexpected error:", sys.exc_info()[0]
+        raise
 
 def set_check_rec(new_result, g_file="rec_game.ini", g_section="best_games", count_rec=10):
     rrr=load_rec(count_rec=10)
@@ -191,12 +211,16 @@ def load_game(f_name="last_game.zicnf", g_section="Last_game"):
         print "Unexpected error:", sys.exc_info()[0]
         raise
     
+def add_params(p_name=0, g_section="screen", g_file="conf_game.ini"):
+    #import ConfigParser
+    pass
+    
 if __name__ == '__main__':
     #print get_screen_set()
     #print sec_to_h(3667)
     #print save_game(182, 181, 1, [[33,33,1,1],[44,44,1,-1],[55,55,2,2],[77,77,-2,1],[222,222,1,-2],[133,33,1,1],[144,44,1,-1],[155,55,2,2],[177,77,-2,1],[122,222,1,-2]])
-    print save_rec({"9":[1,1],"8":[2,2],"7":[3,3],"6":[4,4],"5":[5,5],\
-                    "4":[11,11],"3":[12,12],"2":[13,13],"1":[14,14],"0":[15,15]})
+    #print save_rec({"9":[1,1],"8":[2,2],"7":[3,3],"6":[4,4],"5":[5,5],\
+    #                "4":[11,11],"3":[12,12],"2":[13,13],"1":[14,14],"0":[15,15]})
     #print set_check_rec([56,56],)
     print load_rec()
     #print save_game(182, 181, 1, [[33,33,1,2],[44,44,1,-1],[55,55,2,2],[77,77,-2,1],[222,222,1,-2]])

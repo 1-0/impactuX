@@ -18,11 +18,15 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import functions
+
 def mainrun(scr_params=((640,480),0,32),qqq=0,www=0,eee=0,rrr=0):
+    functions.add_params()
     print "setup!!!"
     pass
 
 if __name__ == '__main__':
     runing = True
     while runing:
-        mainrun()
+        mmm=mainrun()
+        runing = (mmm <>"exit")

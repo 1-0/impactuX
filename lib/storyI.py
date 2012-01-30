@@ -160,4 +160,5 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, g_score=0):
 if __name__ == '__main__':
     runing = True
     while runing:
-        mainrun()
+        mmm=mainrun()
+        runing = (mmm <>"exit")

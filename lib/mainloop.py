@@ -154,9 +154,14 @@ class scenes_run():
 
 def mainrun():
     """mainrun() - main game loop"""
+    import pygame
     n_game = scenes_run()
     while n_game.runing:
         n_game.mainrun()
+
+    pygame.init()
+    screen=pygame.display.set_mode((640,480),0,32)
+    
 
 if __name__ == '__main__':
     mainrun()

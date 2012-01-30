@@ -59,15 +59,15 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
     b_s = 5 #border size
     
     bgif="."+os.sep+"pic"+os.sep+"bgplay.jpg"
+    pygame.init()
+    
+    screen=pygame.display.set_mode(scr_params[0], scr_params[1], scr_params[2])
+    
     
     moif0="."+os.sep+"pic"+os.sep+"impactuX1.png"
     mouse_c0=pygame.image.load(moif0).convert_alpha()
     coursore_type=mouse_c0
     #soif1="."+os.sep+"sounds"+os.sep+"s1.ogg"
-    
-    pygame.init()
-    
-    screen=pygame.display.set_mode(scr_params[0], scr_params[1], scr_params[2])
     
     background=pygame.image.load(bgif).convert()
     
@@ -132,6 +132,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
     run_now = True
     start_runing = False
     last_time = time.time()
+    #c_xxx, c_yyy = 0, 0
     c_xxx, c_yyy = x_max/2, y_max/2
     c_rrr = coursore_type.get_height()/2
 
@@ -142,10 +143,11 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
         for event in pygame.event.get():
             if event.type == QUIT:
                 #i_exit()
-                #ending_play()
+                ending_play()
                 #return i_exit()
                 pygame.mouse.set_visible(True)
-                return return_vars(score_g=g_score, time_g=time_in_game, balls_g=bbb, exit_g=True)
+                return "exit"
+                #return return_vars(score_g=g_score, time_g=time_in_game, balls_g=bbb, exit_g=True)
                 
             if event.type == KEYUP:
                 if event.key == K_ESCAPE:
@@ -174,7 +176,9 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
     
             elif event.type == MOUSEMOTION:
                 x_n0, y_n0=event.pos
-                if x_n0>x_max+20:
+                if x_n0>x_max-mouse_c0.get_width()+20:
+                #if x_n0>x_max+20:
+                #if x_n0>480:
                     pygame.mouse.set_visible(True)
                 else:
                     pygame.mouse.set_visible(False)
@@ -183,12 +187,19 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                     check_tb[1].ch_state(event.type)
         
                 if x_n0<(x_max-mouse_c0.get_width()+20):
+                #if x_n0<(480):
                     if 2<x_n0:
                         c_xxx = x_n0
                     else:
                         c_xxx = 2
                 else:
+                    #c_xxx = 480
                     c_xxx = x_max-mouse_c0.get_width()+20
+                    #pygame.mouse.set_visible(True)
+                    pygame.mouse.set_pos([x_n0,y_n0])
+                    
+                    #print "x_n0 = "+str(x_n0)
+                    #print "c_xxx = "+str(c_xxx)
                 if y_n0<(y_max-mouse_c0.get_height()+20):
                     if 2<y_n0:
                         c_yyy = y_n0
@@ -277,4 +288,5 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
 if __name__ == '__main__':
     runing = True
     while runing:
-        mainrun()
+        mmm=mainrun()
+        runing = (mmm <>"exit")
