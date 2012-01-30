@@ -82,6 +82,7 @@ class scenes_run():
                         self.g_score=game_pass["score"]
                     else:
                         functions.save_game(game_pass["score"], game_pass["time"], self.game_lvl, game_pass["balls"])
+                        self.set_zero()
                         return  0
                 endI.mainrun(functions.get_screen_set(), g_res, \
                 self.g_score, self.g_time, self.game_lvl)

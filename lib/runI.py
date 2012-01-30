@@ -140,7 +140,8 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
     c_xxx, c_yyy = x_max/2, y_max/2
     x_n0, y_n0 = c_xxx, c_yyy
 #    c_rrr = coursore_type.get_height()/2
-    c_rrr = coursore_type.get_height()
+    c_rrr0 = coursore_type.get_height()
+    c_rrr = coursore_type.get_height()/2
     #c_xxx, c_yyy = 0, 0
 
 ####### main loop section #######
@@ -186,7 +187,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                 #c_xxx, c_yyy = event.pos
                 #x_n0, y_n0=c_xxx, c_yyy
                 x_n0, y_n0=event.pos
-                if x_n0>x_max - c_rrr+20:
+                if x_n0>x_max - c_rrr0+20:
                     c_t2=True
                     
                 else:
@@ -195,13 +196,13 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                 check_tb=button_press_checking(x_n0,y_n0, textbuttons.w_list)
                 if check_tb[0]:
                     check_tb[1].ch_state(event.type)
-                if x_n0<(x_max-c_rrr+20):
+                if x_n0<(x_max-c_rrr0+20):
                     if 2<x_n0:
                         c_xxx = x_n0
                     else:
                         c_xxx = 2
                 else:
-                    c_xxx = x_max-c_rrr+20
+                    c_xxx = x_max-c_rrr0+20
                     c_t2=True
                 if y_n0<(y_max-mouse_c0.get_height()+20):
                     if 2<y_n0:
