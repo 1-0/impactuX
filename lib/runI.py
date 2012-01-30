@@ -63,11 +63,15 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
     
     screen=pygame.display.set_mode(scr_params[0], scr_params[1], scr_params[2])
     
-    #pygame.mouse.set_visible(False)
+    pygame.mouse.set_visible(False)
     
     moif0="."+os.sep+"pic"+os.sep+"impactuX1.png"
+    moif1="."+os.sep+"pic"+os.sep+"coursorI.png"
     mouse_c0=pygame.image.load(moif0).convert_alpha()
-    coursore_type=mouse_c0
+    mouse_c1=pygame.image.load(moif1).convert_alpha()
+    coursore_type = mouse_c0
+    coursore_t2 = mouse_c1
+    c_t2 = True
     #soif1="."+os.sep+"sounds"+os.sep+"s1.ogg"
     
     background=pygame.image.load(bgif).convert()
@@ -134,7 +138,9 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
     start_runing = False
     last_time = time.time()
     c_xxx, c_yyy = x_max/2, y_max/2
-    c_rrr = coursore_type.get_height()/2
+    x_n0, y_n0 = c_xxx, c_yyy
+#    c_rrr = coursore_type.get_height()/2
+    c_rrr = coursore_type.get_height()
     #c_xxx, c_yyy = 0, 0
 
 ####### main loop section #######
@@ -146,13 +152,13 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                 #i_exit()
                 #ending_play()
                 #return i_exit()
-                #pygame.mouse.set_visible(True)
+                pygame.mouse.set_visible(True)
                 return "exit"
                 #return return_vars(score_g=g_score, time_g=time_in_game, balls_g=bbb, exit_g=True)
                 
             if event.type == KEYUP:
                 if event.key == K_ESCAPE:
-                    #pygame.mouse.set_visible(True)
+                    pygame.mouse.set_visible(True)
                     return return_vars(score_g=g_score, time_g=time_in_game, balls_g=bbb, exit_g=True)
                     #return {"loose":False, "time":time_in_game, "score":g_score, "win":False, "exit":True}
                 elif event.key==K_p or event.key==K_PAUSE:
@@ -177,33 +183,26 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
     
             elif event.type == MOUSEMOTION:
                 
-                c_xxx, c_yyy = event.pos
-                x_n0, y_n0=c_xxx, c_yyy
-                #x_n0, y_n0=event.pos
+                #c_xxx, c_yyy = event.pos
+                #x_n0, y_n0=c_xxx, c_yyy
+                x_n0, y_n0=event.pos
                 if x_n0>x_max - c_rrr+20:
-                    pass
-                    #pygame.mouse.set_visible(True)
+                    c_t2=True
+                    
                 else:
-                    pass
-                    #pygame.mouse.set_visible(False)
+                    c_t2=False
+                    
                 check_tb=button_press_checking(x_n0,y_n0, textbuttons.w_list)
                 if check_tb[0]:
                     check_tb[1].ch_state(event.type)
-#        
-                if x_n0<(x_max-mouse_c0.get_width()+20):
-                #if x_n0<(480):
+                if x_n0<(x_max-c_rrr+20):
                     if 2<x_n0:
                         c_xxx = x_n0
                     else:
                         c_xxx = 2
                 else:
-                    #c_xxx = 480
-                    c_xxx = x_max-mouse_c0.get_width()+20
-                    #pygame.mouse.set_visible(True)
-                    #pygame.mouse.set_pos([x_n0,y_n0])
-                    
-                    #print "x_n0 = "+str(x_n0)
-                    #print "c_xxx = "+str(c_xxx)
+                    c_xxx = x_max-c_rrr+20
+                    c_t2=True
                 if y_n0<(y_max-mouse_c0.get_height()+20):
                     if 2<y_n0:
                         c_yyy = y_n0
@@ -236,11 +235,11 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                             #print start_runing
                         elif ddd == "exit":
                             #print "Exit"
-                            #pygame.mouse.set_visible(True)
+                            pygame.mouse.set_visible(True)
                             return return_vars(score_g=g_score, time_g=time_in_game, balls_g=bbb, exit_g=True, level_g=lvl)
                         elif ddd == "setup":
                             #print "Setup"
-                            #pygame.mouse.set_visible(True)
+                            pygame.mouse.set_visible(True)
                             return return_vars(score_g=g_score, time_g=time_in_game, balls_g=bbb, level_g=lvl)
         if start_runing:
             n_time = time.time()
@@ -254,7 +253,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                 textlabels.set_named_obj_str("time", "Time: "+str(m_time[0])+":"+str(m_time[1]))
                 if ((time_in_game/30.0)-int(time_in_game/30))==0:
                     if n_balls>9:
-                        #pygame.mouse.set_visible(True)
+                        pygame.mouse.set_visible(True)
                         return return_vars(score_g=g_score, time_g=time_in_game, balls_g=bbb, win_g=(lvl==9), winlvl_g=True, level_g=lvl)
                     sign_dx=random.choice([-1,1])
                     bbb1=objects.AnimationObj(pngs, random.choice(xrange(x_min+dxy,x_max-dxy)), \
@@ -273,7 +272,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                 ch_loste = sqcheck.CheckRound(c_xxx+c_rrr, c_yyy+c_rrr, c_rrr, b_1.pos_x, b_1.pos_y, b_1.radius)
                 ch_loste = (ch_loste and b_1.runing)
                 if ch_loste:
-                    #pygame.mouse.set_visible(True)
+                    pygame.mouse.set_visible(True)
                     return return_vars(score_g=g_score, time_g=time_in_game, balls_g=bbb, loose_g=True, level_g=lvl)
         #showing objects at screen
         screen.blit(background, (0,0))
@@ -285,6 +284,8 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
         textlabels.show_at(screen)
 
         screen.blit(coursore_type,(c_xxx, c_yyy))
+        if c_t2:
+            screen.blit(coursore_t2,(x_n0, y_n0))
         #pygame.display.update()
         pygame.display.flip()
 
