@@ -141,6 +141,21 @@ def load_rec(g_file="rec_game.ini", g_section="best_games", count_rec=10):
         print "Unexpected error:", sys.exc_info()[0]
         raise
 
+def save_set(game_dict, g_file="rec_game.ini", g_section="best_games"):
+    import ConfigParser
+    f_name="."+os.sep+"saves"+os.sep+g_file
+    config = ConfigParser.RawConfigParser()
+    config.add_section(g_section)
+    for kkk in game_dict.keys():
+        config.set(g_section, str(kkk), str(game_dict[str(kkk)]))
+    try:
+        with open(f_name, 'wb') as configfile:
+            sss=config.write(configfile)
+        configfile.close()
+        return sss
+    except:
+        print "Unexpected error:", sys.exc_info()[0]
+
 def save_rec(game_dict, g_file="rec_game.ini", g_section="best_games", count_rec=10):
     import ConfigParser
     f_name="."+os.sep+"saves"+os.sep+g_file

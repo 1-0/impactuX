@@ -125,11 +125,8 @@ class scenes_run():
             lll=functions.load_game()
             self.game_lvl=lll["level"]
             self.g_time=lll["time"]
-            #while self.g_time>180:
-            #    self.g_time -= 180 
             self.g_score=lll["score"]
             self.balls_pos=lll["balls"]
-            #print self.balls_pos
             game_result = self.runing_game()
             if game_result=="exit":
                 self.runing = False
@@ -140,7 +137,7 @@ class scenes_run():
                 #functions.update_records(game_result)
                 pass
         elif scene_i == "setup":
-            setup_result = menuI.mainrun(functions.get_screen_set())#start setup screen
+            setup_result = setupI.mainrun(functions.get_screen_set())#start setup screen
             if setup_result == "exit":
                 self.runing = False
                 return 0
