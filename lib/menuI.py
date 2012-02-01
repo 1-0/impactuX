@@ -127,6 +127,7 @@ def mainrun(scr_params=((640,480),0,32)):
         pygame.display.flip()
        
 if __name__ == '__main__':
+    runing = True
     while runing:
         mmm=mainrun()
         runing = (mmm <>"exit")

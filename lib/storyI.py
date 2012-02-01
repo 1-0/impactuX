@@ -60,7 +60,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, g_score=0):
     scene in ImpactuX"""
     i_exit=functions.iExit() #button functions
     i_run=functions.iRun()
-    i_setup=functions.iSetup()
+    i_menu=functions.iMenu()
     
     #ending_play=functions.Ending_play()
     button_press_checking=functions.Button_press_checking()
@@ -87,7 +87,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, g_score=0):
 
     textbuttons = \
     [objects.t_button(55, 430, "Start round", i_run, f_s, b_s, BLACK, WHITE), \
-    objects.t_button(295,430, "Cancel", i_setup, f_s, b_s, WHITE, RED), \
+    objects.t_button(295,430, "Cancel", i_menu, f_s, b_s, WHITE, RED), \
     objects.t_button(555,430, "EXIT", i_exit, f_s, b_s, BLACK, RED)]
     
     textbuttons = objects.WidgetsPack(30, 430, 240, True, textbuttons)

@@ -46,7 +46,7 @@ def mainrun(scr_params=((640,480),0,32), game_status="loose",g_score=0, g_time=0
     """mainrun(scr_params=((640,480),0,32), game_status="lost",g_score=0, g_time=0, g_lvl=0) -
      screen of level ending scene in ImpactuX"""
     i_exit=functions.iExit() #button functions
-    i_setup=functions.iSetup()
+    i_menu=functions.iMenu()
     
     button_press_checking=functions.Button_press_checking()
     #init vars
@@ -62,7 +62,7 @@ def mainrun(scr_params=((640,480),0,32), game_status="loose",g_score=0, g_time=0
     background=pygame.image.load(end_res["bg"]).convert()
 
     textbuttons = [ \
-                   objects.t_button(295,430, "Continue", i_setup, f_s, b_s, BLACK, GREEN), \
+                   objects.t_button(295,430, "Continue", i_menu, f_s, b_s, BLACK, GREEN), \
                    #objects.t_button(555,430, "EXIT", i_exit, f_s, b_s, BLACK, RED) \
                    ]
     

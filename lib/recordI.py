@@ -28,11 +28,11 @@ from colors import *
 def set_labels(t_score, t_time, l_score, l_time):
     i_exit = functions.iExit()
     if l_time:
-        sss = objects.t_label(270, 310, "last time "+str(l_time), i_exit, 16, 1, MAGENTA, WHITE)
+        sss = objects.t_label(270, 310, "last level time - "+str(l_time), i_exit, 16, 1, MAGENTA, WHITE)
         t_time.add_wig(sss)
     
     if l_score:
-        sss = objects.t_label(270, 310, "last score "+str(l_score), i_exit, 16, 1, RED, WHITE)
+        sss = objects.t_label(270, 310, "last score - "+str(l_score), i_exit, 16, 1, RED, WHITE)
         t_score.add_wig(sss)
         
     rrr=functions.load_rec()
@@ -50,7 +50,7 @@ def set_labels(t_score, t_time, l_score, l_time):
 def mainrun(scr_params=((640,480),0,32),last_time=None, last_score=None):
     """mainrun(scr_params=((640,480),0,32), lvl=0 g_score=0) - screen of level story 
     scene in ImpactuX"""
-    i_setup=functions.iSetup()
+    i_menu=functions.iMenu()
     i_exit = functions.iExit() #button functions
     #ending_play=functions.Ending_play()
     button_press_checking=functions.Button_press_checking()
@@ -66,19 +66,19 @@ def mainrun(scr_params=((640,480),0,32),last_time=None, last_score=None):
     background=pygame.image.load(bgif).convert()
     textbuttons = \
     [\
-    objects.t_button(295,430, "Continue", i_setup, f_s, b_s, BLACK, GREEN), \
+    objects.t_button(295,430, "Continue", i_menu, f_s, b_s, BLACK, GREEN), \
     ]
     textbuttons = objects.WidgetsPack(30, 430, 240, True, textbuttons)
     textlabels = [\
-                  objects.t_label(20, 20, "ImpactuX Best Score", i_setup, 32, 1, RED, None), \
+                  objects.t_label(20, 20, "ImpactuX Best Score", i_exit, 32, 1, RED, None), \
                   ]
     textlabels = objects.WidgetsPack(150, 20, 240, True, textlabels)
     text_score = [\
-                  objects.t_label(200, 20, "Score:", i_setup, 28, 1, GREEN, None), \
+                  objects.t_label(200, 20, "Score:", i_exit, 28, 1, GREEN, None), \
                   ]
     text_score = objects.WidgetsPack(170, 60, 30, False, text_score)
     text_time = [\
-                  objects.t_label(200, 20, "Time:", i_setup, 28, 1, GREEN, None), \
+                  objects.t_label(200, 20, "Time:", i_exit, 28, 1, GREEN, None), \
                   ]
     text_time = objects.WidgetsPack(350, 60, 30, False, text_time)
     set_labels(text_score, text_time, last_time, last_score)

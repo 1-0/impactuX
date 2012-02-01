@@ -53,8 +53,9 @@ class scenes_run():
                 if story_pass=="exit":
                     game_runing = False
                     return  "exit"
-                if story_pass=="setup":
-                    setupI.mainrun()
+                if story_pass=="menu":
+                    self.set_zero()
+                    #setupI.mainrun()
                     return 0
                 else:
                     #start play screen
@@ -81,7 +82,8 @@ class scenes_run():
                         g_res = "winlvl"
                         self.g_score=game_pass["score"]
                     else:
-                        functions.save_game(game_pass["score"], game_pass["time"], self.game_lvl, game_pass["balls"])
+                        if (game_pass["time"]>0) or (self.game_lvl>0):
+                            functions.save_game(game_pass["score"], game_pass["time"], self.game_lvl, game_pass["balls"])
                         self.set_zero()
                         return  0
                 endI.mainrun(functions.get_screen_set(), g_res, \
@@ -158,7 +160,7 @@ def mainrun():
         n_game.mainrun()
 
     pygame.init()
-    screen=pygame.display.set_mode((640,480),0,32)
+    pygame.display.set_mode((640,480),0,32)
     
 
 if __name__ == '__main__':

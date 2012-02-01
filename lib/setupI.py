@@ -31,7 +31,7 @@ def mainrun(scr_params=((640,480),0,32)):
     scene in ImpactuX"""
     i_exit=functions.iExit() #button functions
     i_run=functions.iRun()
-    i_setup=functions.iSetup()
+    i_menu=functions.iMenu()
     i_restore=functions.iRestore()
     i_record=functions.iRecord()
 
@@ -59,7 +59,7 @@ def mainrun(scr_params=((640,480),0,32)):
 
     textbuttons = \
     [objects.t_button(55, 430, "Save", i_run, f_s, b_s, BLACK, GREEN), \
-    objects.t_button(295,430, "Cancel", i_setup, f_s, b_s, WHITE, RED), \
+    objects.t_button(295,430, "Cancel", i_menu, f_s, b_s, WHITE, RED), \
     objects.t_button(555,430, "EXIT", i_exit, f_s, b_s, BLACK, RED)]
     
     textbuttons = objects.WidgetsPack(30, 430, 250, True, textbuttons)
@@ -76,7 +76,7 @@ def mainrun(scr_params=((640,480),0,32)):
     buttons_sets = \
     [\
      objects.t_button(55, 430, b1_l, i_restore, f_s, b_s, BLACK, CYAN,"mode"), \
-     objects.t_button(57, 430, "Set: "+str(m_list[m_next]), i_record, f_s, b_s, BLACK, CYAN,"resolution"), \
+     #objects.t_button(57, 430, "Set: "+str(m_list[m_next]), i_record, f_s, b_s, BLACK, CYAN,"resolution"), \
      ]
     buttons_sets = objects.WidgetsPack(250, 150, 50, False, buttons_sets)
 

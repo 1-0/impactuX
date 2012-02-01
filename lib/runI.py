@@ -48,7 +48,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
     
     i_exit=functions.iExit() #button functions
     i_run=functions.iRun()
-    i_setup=functions.iSetup()
+    i_menu=functions.iMenu()
     
     #ending_play=functions.Ending_play()
     button_press_checking=functions.Button_press_checking()
@@ -120,7 +120,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
 
     textbuttons = \
     [objects.t_button(55, 430, "Run", i_run, f_s, b_s, MAGENTA, GREEN, "run"), \
-    objects.t_button(295,430, "Stop", i_setup, f_s, b_s, BLUE, YELLOW, ), \
+    objects.t_button(295,430, "Stop", i_menu, f_s, b_s, BLUE, YELLOW, ), \
     objects.t_button(555,430, "EXIT", i_exit, f_s, b_s, BLACK, RED)]
     
     #t_y=textlabels.height+textlabels.pos_y+100
@@ -238,7 +238,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                             #print "Exit"
                             pygame.mouse.set_visible(True)
                             return return_vars(score_g=g_score, time_g=time_in_game, balls_g=bbb, exit_g=True, level_g=lvl)
-                        elif ddd == "setup":
+                        elif ddd == "menu":
                             #print "Setup"
                             pygame.mouse.set_visible(True)
                             return return_vars(score_g=g_score, time_g=time_in_game, balls_g=bbb, level_g=lvl)

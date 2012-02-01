@@ -22,6 +22,10 @@
 import pygame, sys, os
 #from pygame.locals import FULLSCREEN
         
+class iMenu:
+    def __call__(self):
+        return "menu"
+        
 class iExit:
     def __call__(self):
         return "exit"
