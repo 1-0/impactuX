@@ -33,6 +33,7 @@ def mainrun(scr_params=((640,480),0,32)):
     i_run=functions.iRun()
     i_setup=functions.iSetup()
     i_restore=functions.iRestore()
+    i_record=functions.iRecord()
 
     
     #ending_play=functions.Ending_play()
@@ -50,6 +51,12 @@ def mainrun(scr_params=((640,480),0,32)):
     
     background=pygame.image.load(bgif).convert()
 
+    
+    m_list=pygame.display.list_modes()
+    m_list.sort()
+    m_index=m_list.index(scr_params[0])
+
+
     textbuttons = \
     [objects.t_button(55, 430, "Save", i_run, f_s, b_s, BLACK, GREEN), \
     objects.t_button(295,430, "Cancel", i_setup, f_s, b_s, WHITE, RED), \
@@ -60,10 +67,18 @@ def mainrun(scr_params=((640,480),0,32)):
         b1_l="Set Fullscreen"
     else:
         b1_l="Set Windowed"
+        
+    if m_index>=(len(m_list)-1):
+        m_next=0
+    else:
+        m_next=m_index+1
+    
     buttons_sets = \
-    [objects.t_button(55, 430, b1_l, i_restore, f_s, b_s, BLACK, CYAN,"mode"), \
+    [\
+     objects.t_button(55, 430, b1_l, i_restore, f_s, b_s, BLACK, CYAN,"mode"), \
+     objects.t_button(57, 430, "Set: "+str(m_list[m_next]), i_record, f_s, b_s, BLACK, CYAN,"resolution"), \
      ]
-    buttons_sets = objects.WidgetsPack(250, 150, 30, False, buttons_sets)
+    buttons_sets = objects.WidgetsPack(250, 150, 50, False, buttons_sets)
 
     textlabels = [objects.t_label(270, 230, "ImpactuX", i_exit, 32, 1, RED, None),\
                   objects.t_label(20, 380, "Options", i_exit, 22, 1, GREEN, None)\
@@ -137,8 +152,15 @@ def mainrun(scr_params=((640,480),0,32)):
                             else:
                                 buttons_sets.set_named_obj_str("mode", "Set Fullscreen")
                                 n_scr_param=0
-                        
-                       
+                        elif ddd=="record":
+                            m_index=m_next
+                            n_scr_res=m_list[m_index]
+                            if m_index>=(len(m_list)-1):
+                                m_next=0
+                            else:
+                                m_next=m_index+1
+                            buttons_sets.set_named_obj_str("resolution", "Set: "+str(m_list[m_next]))
+
         screen.blit(background, (0,0))
         textbuttons.show_at(screen)
         textlabels.show_at(screen)
