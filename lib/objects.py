@@ -260,6 +260,7 @@ class LoadedSounds(LoadedObj):
     
     def startinit(self):
         pygame.mixer.init()
+        self.stopped=False
         #pygame.mixer.set_num_channels(16)
     
     def set_stopped(self, s_stop=True):
