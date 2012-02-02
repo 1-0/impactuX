@@ -77,7 +77,8 @@ class AnimationObj(pygame.sprite.Sprite):
     """AnimationObj() - class to use animated objects on sprites"""
     def __init__(self, listpng, pos_x=111, pos_y=111, dx=10, dy=5,\
                   delay=1, fff=0, direct=1, picname="rock", \
-                  starting_time=0, borders=(25,25,615,455), stopped = True):
+                  starting_time=0, borders=(25,25,615,455), stopped = True,
+                  climb_sound_file=None, s_hip=None):
         
         pygame.sprite.Sprite.__init__(self)
         
@@ -113,8 +114,21 @@ class AnimationObj(pygame.sprite.Sprite):
 #        self.direct = direct
         self.direct = dsign(self.dx)
         self.impacts = 0
-
-
+        
+        if climb_sound_file:
+            self.set_sound(climb_sound_file, s_hip)
+            
+    def set_sound (self, s_file, son_hip):
+        self.sound_name=s_file
+        self.sound_hip=son_hip
+        
+    def play_sound(self):
+        if self.sound_name:
+            sss=self.sound_hip
+            sss.playsnd(self.sound_name)
+            #pygame.mixer.music.load(self.sound_name)
+            #pygame.mixer.music.play(0, 0.0)
+        
     def o_move(self, obj_list=None):
         xxx=self.pos_x+self.dx
         yyy=self.pos_y+self.dy
@@ -128,10 +142,12 @@ class AnimationObj(pygame.sprite.Sprite):
         if xxx>self.xmax or xxx<self.xmin:
             self.dx= -self.dx
             self.direct = -self.direct
-            impact_wall = True     
+            impact_wall = True
         if yyy>self.ymax or yyy<self.ymin:
             self.dy= -self.dy
             impact_wall = True
+        if impact_wall:
+            self.play_sound()
         return impact_wall
         
     def check_runing(self):
@@ -206,15 +222,18 @@ class AnimationO(AnimationObj):
         self.pos_x, self.pos_y = n_x, n_y
 
 class LoadedObj():
-    """LoadedObj() - class to control loaded media objacts"""
+    """LoadedObj() - class to control loaded media objects"""
     def __init__(self, basepath=".", baseext="png", startname=False, startcount=1):
         self.path=basepath+os.sep
         self.ext=baseext
         self.objdict={}
+        self.startinit()
         if startname:
             self.addobj(startname, startcount)
             
-        
+    def startinit(self):
+        pass
+    
     def addobj(self, filesname, nuberfiles):
         newImages = []
         for i in range(nuberfiles-1):
@@ -230,6 +249,29 @@ class LoadedObj():
             self.addobj(filesname, nuberfiles)
         
         return self.objdict[filesname]
+
+class LoadedSounds(LoadedObj):
+    """LoadadSounds(LoadedObj) - class to control loaded sound objects"""
+    def addobj(self, s_file, nnn=None):
+        filename=self.path + s_file + "."+self.ext
+        #print filename
+        n_snd=pygame.mixer.Sound(filename)
+        self.objdict.update({s_file: n_snd})
+    
+    def startinit(self):
+        pygame.mixer.init()
+        #pygame.mixer.set_num_channels(16)
+    
+    def set_stopped(self, s_stop=True):
+        if s_stop:
+            self.stopped=True
+    
+    def playsnd(self, s_name):
+        if not(self.stopped):
+            sss=self.getadd(s_name)
+            s_ch=pygame.mixer.find_channel()
+            s_ch.play(sss)
+            return s_ch
 
 class button_o:
     def __init__ (self, b_coord, pict_t, type_b=0):
@@ -304,7 +346,6 @@ class t_button:
             plato.blit(self.font_pic, (self.pos_x+self.border_size, self.pos_y))
         elif self.state==2:
             plato.blit(self.font_pic, (self.pos_x, self.pos_y+self.border_size))
-        #print "x---y "+ str(self.pos_x) + " --- " + str(self.pos_y)
         
     def check_in(self, c_coordx, c_coordy):
         self.mouse_in=sqcheck.CheckRectPoint(self.pos_x, self.pos_y, self.width, self.height, c_coordx, c_coordy)

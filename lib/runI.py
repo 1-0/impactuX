@@ -60,6 +60,10 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
     
     bgif="."+os.sep+"pic"+os.sep+"bgplay.jpg"
     #pygame.init()
+    snd = objects.LoadedSounds(("."+os.sep+"sounds"), "ogg")
+    #soif1="."+os.sep+"sounds"+os.sep+"s1.ogg"
+    soif1="impactuX_click1"
+    soif2="impactuX_click2"
     
     screen=pygame.display.set_mode(scr_params[0], scr_params[1], scr_params[2])
     
@@ -93,7 +97,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                                             iii[2], \
                                             iii[3], 1, 0,\
                                             objects.dsign(iii[2]), "rock", 0, \
-                                            (x_min, y_min, x_max, y_max), True))
+                                            (x_min, y_min, x_max, y_max), True, soif1, snd))
     else:
         for iii in range(n_balls):
             corrupted_b = True
@@ -104,7 +108,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                                             sign_dx*random.choice(xrange(dx_min,dx_max)), \
                                             random.choice([-1,1])*random.choice(xrange(dy_min,dy_max)), \
                                             1, 0, sign_dx, "rock", 0, \
-                                            (x_min, y_min, x_max, y_max), True)
+                                            (x_min, y_min, x_max, y_max), True, soif1, snd)
                 corrupted_b = bbb1.is_impacted_list(bbb)
             
             bbb.append(bbb1)
@@ -262,7 +266,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                                             sign_dx*random.choice(xrange(dx_min,dx_max)), \
                                             random.choice([-1,1])*random.choice(xrange(dy_min,dy_max)), \
                                             .1, 0, sign_dx, "rock", 300, \
-                                            (x_min, y_min, x_max, y_max), False)
+                                            (x_min, y_min, x_max, y_max), False, soif1, snd)
                     bbb.append(bbb1)
                     n_balls = len(bbb)
                     textlabels.set_named_obj_str("balls", "Balls: "+str(n_balls))
@@ -273,6 +277,8 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                 ch_loste = sqcheck.CheckRound(c_xxx+c_rrr, c_yyy+c_rrr, c_rrr, b_1.pos_x, b_1.pos_y, b_1.radius)
                 ch_loste = (ch_loste and b_1.runing)
                 if ch_loste:
+                    snd.playsnd(soif2)
+                    #pygame.mixer.quit()
                     pygame.mouse.set_visible(True)
                     return return_vars(score_g=g_score, time_g=time_in_game, balls_g=bbb, loose_g=True, level_g=lvl)
         #showing objects at screen
