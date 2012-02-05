@@ -105,7 +105,7 @@ class scenes_run():
         return sss
 
     def mainrun(self):
-        """mainrun(self) - main game screens class loop"""
+        """mainrun(self) - main game screens change class loop"""
         #start menu screen
         scene_i = menuI.mainrun(functions.get_screen_set()) #[next_window, exit_results]
         if scene_i == "exit":

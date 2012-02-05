@@ -28,6 +28,92 @@ from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, \
 MOUSEMOTION, MOUSEBUTTONUP, K_p, K_PAUSE, FULLSCREEN
 from colors import *
 
+class game_runing:
+    """game_runing - class of running game scene for playing"""
+    def __init__(self, scr_params=((640,480),0,32),\
+                 lvl=0, balls_pos=None, g_time=0,\
+                 g_score=0, n_balls=5):
+        pygame.init()
+        #screen start param's i.e. size, modee
+        scr_size=scr_params[0]
+        self.height = scr_size[1]
+        self.width = scr_size[0]
+        self.flags = scr_params[1]
+        self.depth = scr_params[2]
+        self.screen = pygame.display.set_mode(scr_params[0], \
+                                              scr_params[1], \
+                                              scr_params[2])
+        self.level = lvl
+        self.time = g_time
+        #ball start param's i.e. position range, speed range
+        self.x_min = 20
+        self.y_min = 20
+        self.x_max = 510
+        self.y_max = 455
+        self.dx_min = 1
+        self.dy_min = 1
+        self.dx_max = lvl+2
+        self.dy_max = lvl+2
+        self.dxy = 60
+        self.balls = []
+        self.balls_count = 0
+        self.pictures = objects.LoadedObj("."+os.sep+"pic")
+        self.sounds = objects.LoadedSounds(("."+os.sep+"sounds"), "ogg")
+        self.set_balls(balls_pos, n_balls)
+        
+        self.inits()
+        
+    def inits(self):
+        pass
+    
+    def set_balls(self, b_params, num_balls):
+        """set_balls(self, b_params, new_balls) - 
+                 adding start balls to balls list"""
+        if b_params:
+            for iii in b_params:
+                self.add_ball(ball_params=iii)
+        else:
+            for iii in range(num_balls):
+                self.add_random_ball()
+
+    def add_ball(self, ball_params, ball_name="rock", \
+                 is_stopped=True, \
+                 sound_name="impactuX_click1"):
+        """add_ball(self, ball_params, ball_name="rock", \
+                 is_stopped=True, \
+                 sound_name="impactuX_click1") - 
+                 adding 1 ball to balls list"""
+        n_ball = objects.AnimationObj(self.pictures, \
+                                ball_params[0], \
+                                ball_params[1], \
+                                ball_params[2], \
+                                ball_params[3], 1, 0,\
+                                objects.dsign(ball_params[2]), "rock", 0, \
+                                (self.x_min, self.y_min, \
+                                 self.x_max, self.y_max), \
+                                is_stopped, \
+                                sound_name, self.sounds)
+        self.balls.append(n_ball)
+        self.balls_count += 1
+        
+    def add_random_ball(self, num_balls, ball_name="rock", \
+                 is_stopped=True, \
+                 sound_name="impactuX_click1"):
+        """add_random_ball(self, num_balls, ball_name="rock", \
+                 is_stopped=True, \
+                 sound_name="impactuX_click1") - 
+                 adding 1 random ball to balls list"""
+        new_rand_params=(random.choice(xrange(self.x_min+self.dxy,self.x_max-self.dxy)), \
+                                    random.choice(xrange(self.y_min+self.dxy,self.y_max-self.dxy)), \
+                                    random.choice([-1,1])*random.choice(xrange(self.dx_min,self.dx_max)), \
+                                    random.choice([-1,1])*random.choice(xrange(self.dy_min,self.dy_max)))
+        self.add_ball(new_rand_params, \
+                      objects.dsign(new_rand_params[2]), "rock", 0, \
+                                (self.x_min, self.y_min, \
+                                 self.x_max, self.y_max), \
+                                is_stopped, \
+                                sound_name, self.sounds)
+        
 def return_vars(score_g, time_g=0, balls_g=None, loose_g=False, win_g=False, exit_g=False, winlvl_g=False, level_g=0):
     #return {"loose":False, "time":time_in_game, "score":g_score, "win":False, "exit":True}
     all_ball=[]
