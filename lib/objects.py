@@ -34,45 +34,6 @@ def dsign(x):
     else: 
         return -1
 
-class RectObjSet():
-    """RectObjSet() - class to use rectongle set of objects to check events and update"""
-    def __init__(self, pos_x, pos_y, size_x, size_y, picname="rock", start_obj_list=[]):
-        self.pos_x=pos_x
-        self.pos_y=pos_y
-        self.size_x=size_x
-        self.size_y=size_y
-
-        self.obj_list=start_obj_list
-        
-        self.animation=AnimationO(start_obj_list, pos_x, pos_y, dx=10,dy=5, delay=1, fff=0, direct=1, picname="rock")
-
-    def add_obj(self, new_obj):
-        if self.check_in(new_obj.pos_x, new_obj.pos_y):
-            self.obj_list.append(new_obj)
-            return True
-        else:
-            return False
-
-
-    def update(self):
-        self.animation.update()
-        for ooo in self.obj_list:
-            ooo.update
-                
-    def check_in(self, p_x, p_y):
-        n_x = p_x - self.pos_x
-        n_y = p_y - self.pos_y
-        
-        if (((n_x>=0) and (n_x<=self.size_x)) and ((n_y>=0) and (n_y<=self.size_y))):
-            return True
-        else:
-            return False
-            
-    def check_run(self, p_x, p_y, event=[]):
-        for ooo in self.obj_list:
-            if ooo.check_in(p_x, p_y):
-                ooo.run(event)
-
 class AnimationObj(pygame.sprite.Sprite):
     """AnimationObj() - class to use animated objects on sprites"""
     def __init__(self, listpng, pos_x=111, pos_y=111, dx=10, dy=5,\
@@ -274,44 +235,6 @@ class LoadedSounds(LoadedObj):
             s_ch.play(sss)
             return s_ch
 
-class button_o:
-    def __init__ (self, b_coord, pict_t, type_b=0):
-        self.pos_x=b_coord[0]
-        self.pos_y=b_coord[1]
-        self.coord=b_coord
-        self.picture=pict_t
-        self.radius=pict_t.get_width()/2
-        self.xradius=pict_t.get_width()/2
-        self.yradius=pict_t.get_height()/2
-        self.typenum=type_b
-        
-    def __getitem__(self,x):
-        return self.coord, 1
-            
-    def check_in(self, c_coordx, c_coordy, c_size=[0, 0]):
-        return sqcheck.CheckRectangle(self.pos_x+self.xradius, self.pos_y+self.yradius, self.xradius, self.yradius, c_coordx, c_coordy, c_size[0], c_size[1])
-
-    def show_at(self, plato):
-        plato.blit(self.picture, self.coord)
-
-class tow_o:
-    def __init__ (self, b_coord, pict_t, type_b=0):
-        self.pos_x=b_coord[0]
-        self.pos_y=b_coord[1]
-        self.coord=b_coord
-        self.picture=pict_t
-        self.radius=pict_t.get_width()/2
-        self.typenum=type_b
-        
-    def __getitem__(self,x):
-        return self.coord, 2
-            
-    def check_in(self, c_coordx, c_coordy, c_size=0):
-        return sqcheck.CheckRound(self.pos_x+self.radius, self.pos_y+self.radius, self.radius, c_coordx, c_coordy, c_size)
-
-    def show_at(self, plato):
-        plato.blit(self.picture, self.coord)
-        
 class t_button:
     """text_button - text button with border size"""
     def __init__ (self, pos_x, pos_y, b_text, b_event, f_height=18, \
@@ -328,8 +251,11 @@ class t_button:
         self.fontcolor=f_color
         
         self.set_text(b_text)
+        self.set_doing(b_event)
         
-        self.doing=b_event
+    def set_doing(self, ev_name):
+        if ev_name:
+            self.doing=ev_name
         
     def set_text(self, n_text):
         self.text=n_text
@@ -372,37 +298,14 @@ class t_label(t_button):
             pygame.draw.rect(plato, self.color, (self.pos_x, self.pos_y, self.width, self.height), 0)
         plato.blit(self.font_pic, (self.pos_x+self.border_size, self.pos_y+self.border_size))
         
+    def set_doing(self, ev_name):
+        pass
     
     def check_in(self, c_coordx, c_coordy):
         pass
         
     def ch_state(self, event_type):
         pass
-                
-class Game(object):
-    def __init__(self, g_mode = (800, 600), g_caption = "defenderuX"):
-        pygame.init()
-        self.window = pygame.display.set_mode(g_mode)
-        self.clock = pygame.time.Clock()
-        pygame.display.set_caption(g_caption)
-        pygame.event.set_allowed([QUIT, KEYUP, MOUSEBUTTONUP])   
-    def run(self):
-        print 'defenderuX Starting Event Loop'
-        running = True
-        while running:
-            self.clock.tick()
-            running = self.handleEvents()
-            pygame.display.set_caption('defenderuX  %d fps' % self.clock.get_fps())
-            pygame.display.flip()
-        print 'Quitting. Thanks for playing defenderuX'
-    def handleEvents(self):
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                return False
-            elif event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
-                    return False
-        return True
 
 class WidgetsPack():
     def __init__(self, pos_x=0, pos_y=0, w_size=5, h_alignment=True, start_list=[]):

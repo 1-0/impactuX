@@ -33,7 +33,10 @@ class game_runing:
     def __init__(self, scr_params=((640,480),0,32),\
                  lvl=0, balls_pos=None, g_time=0,\
                  g_score=0, n_balls=5):
-        pygame.init()
+        self.start_inits()
+        self.score = g_score
+        self.time = g_time
+        self.level = lvl
         #screen start param's i.e. size, modee
         scr_size=scr_params[0]
         self.height = scr_size[1]
@@ -43,17 +46,13 @@ class game_runing:
         self.screen = pygame.display.set_mode(scr_params[0], \
                                               scr_params[1], \
                                               scr_params[2])
-        self.level = lvl
-        self.time = g_time
         #ball start param's i.e. position range, speed range
         self.x_min = 20
         self.y_min = 20
         self.x_max = 510
         self.y_max = 455
-        self.dx_min = 1
-        self.dy_min = 1
-        self.dx_max = lvl+2
-        self.dy_max = lvl+2
+        self.dd_min = 1
+        self.dd_max = lvl+2
         self.dxy = 60
         self.balls = []
         self.balls_count = 0
@@ -61,10 +60,43 @@ class game_runing:
         self.sounds = objects.LoadedSounds(("."+os.sep+"sounds"), "ogg")
         self.set_balls(balls_pos, n_balls)
         
-        self.inits()
+        self.init_labels()
+        self.init_buttons()
+        self.end_inits()
         
-    def inits(self):
+    def start_inits(self, bg_name="bgplay.jpg"):
+        pygame.init()
+        pygame.mouse.set_visible(False)
+        bgif="."+os.sep+"pic"+os.sep+bg_name
+        self.background=pygame.image.load(bgif).convert()
+        
+    def end_inits(self):
         pass
+
+    def init_labels(self):
+        i_exit=None
+        m_time = functions.sec_to_minute(self.time)
+        textlabels = [objects.t_label(530, 10, "ImpactuX", i_exit, 22, 1, RED, None), \
+            objects.t_label(540, 40, "Paused", i_exit, 16, 1, MAGENTA, None, "status"), \
+            objects.t_label(540, 40, "Level: "+str(self.level+1), i_exit, 16, 1, BLUE, WHITE), \
+            objects.t_label(540, 40, "Score: "+str(self.score), i_exit, 16, 1, BLUE, WHITE, "score"), \
+            objects.t_label(540, 40, "Time: "+str(m_time[0])+":"+str(m_time[1]), i_exit, 16, 1, BLUE, WHITE, "time"), \
+            objects.t_label(540, 40, "Balls: "+str(self.balls_count), i_exit, 16, 1, BLUE, WHITE, "balls")]
+    
+        self.labels = objects.WidgetsPack(540, 20, 30, False, textlabels)
+    
+    def init_buttons(self):
+        i_exit=functions.iExit() #button functions
+        i_run=functions.iRun()
+        i_menu=functions.iMenu()
+        f_s = 20 #font size
+        b_s = 5 #border size
+        textbuttons = [objects.t_button(55, 430, "Run", i_run, f_s, b_s, MAGENTA, GREEN, "run"), \
+            objects.t_button(295,430, "Stop", i_menu, f_s, b_s, BLUE, YELLOW, ), \
+            objects.t_button(555,430, "EXIT", i_exit, f_s, b_s, BLACK, RED)]
+        #t_y=textlabels.height+textlabels.pos_y+100
+        t_y=345
+        self.buttons = objects.WidgetsPack(560, t_y, 45, False, textbuttons)
     
     def set_balls(self, b_params, num_balls):
         """set_balls(self, b_params, new_balls) - 
@@ -95,6 +127,8 @@ class game_runing:
                                 sound_name, self.sounds)
         self.balls.append(n_ball)
         self.balls_count += 1
+        self.allSprites = pygame.sprite.Group(self.balls)
+
         
     def add_random_ball(self, num_balls, ball_name="rock", \
                  is_stopped=True, \
@@ -105,8 +139,8 @@ class game_runing:
                  adding 1 random ball to balls list"""
         new_rand_params=(random.choice(xrange(self.x_min+self.dxy,self.x_max-self.dxy)), \
                                     random.choice(xrange(self.y_min+self.dxy,self.y_max-self.dxy)), \
-                                    random.choice([-1,1])*random.choice(xrange(self.dx_min,self.dx_max)), \
-                                    random.choice([-1,1])*random.choice(xrange(self.dy_min,self.dy_max)))
+                                    random.choice([-1,1])*random.choice(xrange(self.dd_min,self.dd_max)), \
+                                    random.choice([-1,1])*random.choice(xrange(self.dd_min,self.dd_max)))
         self.add_ball(new_rand_params, \
                       objects.dsign(new_rand_params[2]), "rock", 0, \
                                 (self.x_min, self.y_min, \
