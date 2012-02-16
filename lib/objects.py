@@ -61,13 +61,13 @@ class CursorObj:
     def check_borders(pos_x, pos_y):
         if self.all_visible:
             if (self.min_x<pos_x) and (pos_x<self.max_x):
-                self.pos_x = new_pos_x
+                self.pos_x = pos_x
             if (self.min_y<pos_y) and (pos_y<self.max_y):
-                self.pos_y = new_pos_y
+                self.pos_y = pos_y
         else:
             if (self.min_x<pos_x) and (pos_x<self.max_x) and \
             (self.min_y<pos_y) and (pos_y<self.max_y):
-                self.set_pos(new_pos_x, new_pos_y)
+                self.set_pos(pos_x, pos_y)
             else:
                 self.visible = False
         
