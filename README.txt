@@ -1,6 +1,6 @@
 **impactuX** - tuX collision game, written on python (2.6+) under GPL 3 license.
 
-The purpose of the game: check or increase the rate of reaction and attentiveness operators avtomatiziroannyh control systems, or any interested person.
+The purpose of the game: check or increase the rate of reaction and attentiveness operators automatic control systems, or any interested person.
 
 The game is based on the mechanics of the game kollision from KDE and linux classic game killbill.
 
