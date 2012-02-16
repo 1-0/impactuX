@@ -34,6 +34,51 @@ def dsign(x):
     else: 
         return -1
 
+class CursorObj:
+    def __init__(self, pos_x, pos_y, list_pic, c_picname, all_visible=True, c_visible=True, c_borders=None):
+        self.visible = c_visible
+        self.all_visible = all_visible
+        self.check_set_pos(pos_x, pos_y)
+        self.set_picture(list_pic, c_picname)
+        if c_borders:
+            self.min_x = c_borders[0]
+            self.min_y = c_borders[1]
+            self.max_x = c_borders[2]
+            self.max_y = c_borders[3]
+        else:
+            self.min_x = None
+        
+    def check_set_pos(self, new_pos_x, new_pos_y):
+        if self.min_x:
+            self.check_borders(new_pos_x, new_pos_y)
+        else:
+            self.set_pos(new_pos_x, new_pos_y)
+
+    def set_pos(self, new_pos_x, new_pos_y):
+        self.pos_x = new_pos_x
+        self.pos_y = new_pos_y
+    
+    def check_borders(pos_x, pos_y):
+        if self.all_visible:
+            if (self.min_x<pos_x) and (pos_x<self.max_x):
+                self.pos_x = new_pos_x
+            if (self.min_y<pos_y) and (pos_y<self.max_y):
+                self.pos_y = new_pos_y
+        else:
+            if (self.min_x<pos_x) and (pos_x<self.max_x) and \
+            (self.min_y<pos_y) and (pos_y<self.max_y):
+                self.set_pos(new_pos_x, new_pos_y)
+            else:
+                self.visible = False
+        
+    def set_picture(self, pnglistname, picname):
+        self.picture = pnglistname.getadd(self.picname, None)
+        self.radius = self.picture.get_height()/2
+        
+    def update(self, plato):
+        if self.visible:
+            plato.blit(self.picture,(self.pos_x, self.pos_y))
+
 class AnimationObj(pygame.sprite.Sprite):
     """AnimationObj() - class to use animated objects on sprites"""
     def __init__(self, listpng, pos_x=111, pos_y=111, dx=10, dy=5,\
@@ -196,13 +241,17 @@ class LoadedObj():
         pass
     
     def addobj(self, filesname, nuberfiles):
-        newImages = []
-        for i in range(nuberfiles-1):
-            imgName = self.path + filesname+"%d." % i
-            imgName += self.ext
-            tmpImage = pygame.image.load(imgName).convert_alpha()
-            newImages.append(tmpImage)
-            
+        if nuberfiles:
+            newImages = []
+            for i in range(nuberfiles-1):
+                imgName = self.path + filesname+"%d." % i
+                imgName += self.ext
+                tmpImage = pygame.image.load(imgName).convert_alpha()
+                newImages.append(tmpImage)
+        else:
+            imgName = self.path + filesname
+            newImages = pygame.image.load(imgName).convert_alpha()
+
         self.objdict.update({filesname: newImages})
         
     def getadd(self, filesname, nuberfiles=1):
@@ -415,5 +464,6 @@ class WidgetsPack():
             wig.ch_state(event_type)
 
 if __name__ == '__main__':
-    game = Game()
-    game.run()
+    pass
+    #game = Game()
+    #game.run()
