@@ -22,8 +22,9 @@ import pygame, os
 import time
 from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, \
 MOUSEMOTION, MOUSEBUTTONUP #, FULLSCREEN
-import objects, functions 
-from colors import *
+import lib.objects as objects
+import lib.functions as functions
+from lib.colors import *
 
 def get_res(g_st, l_v=0):
     """get_res(g_st, l_v=0) - getting result param's of end window"""
@@ -130,7 +131,7 @@ def mainrun(scr_params=((640,480),0,32), game_status="loose",g_score=0, g_time=0
         #pygame.display.update()
         n_ttt = time.time()
         if n_ttt-ttt>10:
-            #print "+++++++"
+            #print("+++++++")
             return 0
         
         pygame.display.flip()
@@ -139,4 +140,4 @@ if __name__ == '__main__':
     runing = True
     while runing:
         mmm=mainrun()
-        runing = (mmm <>"exit")
+        runing = (mmm!="exit")

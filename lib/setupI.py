@@ -22,9 +22,10 @@
 import pygame, os
 from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, \
 MOUSEMOTION, MOUSEBUTTONUP #, FULLSCREEN
-import objects, functions 
+import lib.objects as objects
+import lib.functions as functions
 
-from colors import *
+from lib.colors import *
 
 def mainrun(scr_params=((640,480),0,32)):
     """mainrun(scr_params=((640,480),0,32), lvl=0 g_score=0) - screen of level story 
@@ -172,4 +173,4 @@ if __name__ == '__main__':
     runing = True
     while runing:
         mmm=mainrun()
-        runing = (mmm <>"exit")
+        runing = (mmm!="exit")

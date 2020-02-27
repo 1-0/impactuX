@@ -22,9 +22,9 @@
 #import math
 import time
 import pygame, os
-import sqcheck
-import impact
-#import functions 
+import lib.sqcheck as sqcheck
+import lib.impact as impact
+#import lib.functions 
 from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, \
 MOUSEMOTION, MOUSEBUTTONUP, KEYDOWN #, FULLSCREEN
 
@@ -192,7 +192,7 @@ class AnimationObj(pygame.sprite.Sprite):
         +...=m1vn1+m2vn2+... all m=1"""
         if self.run and not(self.stopped):
             for bbb in a_sprites:
-                if bbb<>self and (not(self.new_dx)):
+                if bbb!=self and (not(self.new_dx)):
                     if sqcheck.CheckRound (bbb.pos_x, bbb.pos_y, bbb.radius, self.pos_x, self.pos_y, self.radius):
                         #self.nnnx,self.nnny=bbb.pos_x,bbb.pos_y
                         self.new_dx,self.new_dy,bbb.new_dx,bbb.new_dy=impact.sqImpact(self.pos_x, self.pos_y, self.dx, self.dy, bbb.pos_x, bbb.pos_y, bbb.dx, bbb.dy)
@@ -331,7 +331,7 @@ class t_button:
         
     def ch_state(self, event_type):
         if event_type==MOUSEMOTION:
-            if self.mouse_in and (self.state <> 2):
+            if self.mouse_in and self.state!=2:
                 self.state=1
         elif event_type==MOUSEBUTTONDOWN:
             self.state=2
@@ -372,7 +372,7 @@ class WidgetsPack():
         return len(self.w_list)
         
     def __getitem__(self, nnn):
-        if self.w_list<>[]:
+        if self.w_list!=[]:
             return self.w_list(nnn)
 
     def set_new_pos(self, pos_x, pos_y):

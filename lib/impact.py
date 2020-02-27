@@ -64,7 +64,6 @@ def ballsImpact(x1, y1, r1, v1x, v1y, x2, y2, r2, v2x, v2y):
     
 def getLong(x, y):
     lll=mmm.sqrt(x**2+y**2)
-    #print lll
     return lll
 
 def ball1Impact(x1, y1, vx, vy, x2, y2):
@@ -75,15 +74,15 @@ def ball1Impact(x1, y1, vx, vy, x2, y2):
     dy=y2-y1
     l=getLong(dx, dy)
     av=mmm.acos(vx/v)
-    print av
+    # print(av)
     ac=mmm.acos(dx/l)
-    print ac
+    # print(ac)
     a=ac+av
-    print a
+    # print(a)
     vnx=v*mmm.cos(a)
-    print vnx
+    # print(vnx)
     vny=v*mmm.sin(a)
-    print vny
+    # print(vny)
     
     vn1x=vnx*mmm.cos(ac)
     vn1y=vnx*mmm.sin(ac)
@@ -106,11 +105,11 @@ def ball1Impact(x1, y1, vx, vy, x2, y2):
     return vn1x, vn1y, vn2x, vn2y
     
 if __name__ == '__main__':
-    print "pointsImpact(1, 2, 3, 4) --- ", 
-    print pointsImpact(1, 2, 3, 4)
+    print("pointsImpact(1, 2, 3, 4) --- ")
+    print(pointsImpact(1, 2, 3, 4))
     
-    print "sqImpact(0, 2, 4, 5, 0, 3, 0, -3) --- " 
-    print sqImpact(0, 2, 4, 5, 0, 3, -1, -3)
+    print("sqImpact(0, 2, 4, 5, 0, 3, 0, -3) --- ")
+    print(sqImpact(0, 2, 4, 5, 0, 3, -1, -3))
     
     
     

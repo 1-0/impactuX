@@ -19,21 +19,22 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import ConfigParser
+from configparser import ConfigParser as ConfigParser
 
-class RawConfigParserGZ(ConfigParser.RawConfigParser):
+class RawConfigParserGZ(ConfigParser):
     def read(self, filenames):
         """Read and parse a gz filename or a list of filenames.
         """
-        import gzip
-        #import new_gzip as gzip
+        # import gzip
+        # import new_gzip as gzip
 
-        if isinstance(filenames, basestring):
-            filenames = [filenames]
+        if isinstance(filenames, str):
+            filenames = [filenames,]
         read_ok = []
         for filename in filenames:
             try:
-                fp = gzip.open(filename)
+                fp = open(filename)
+                # fp = gzip.open(filename)
             except IOError:
                 continue
             self._read(fp, filename)
@@ -42,6 +43,6 @@ class RawConfigParserGZ(ConfigParser.RawConfigParser):
         return read_ok
 
 if __name__ == '__main__':
-    print "insert test RawConfigParserGZ..."
+    print("insert test RawConfigParserGZ...")
 
 

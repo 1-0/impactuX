@@ -22,11 +22,12 @@ import pygame
 import random
 import os
 import time
-import sqcheck
-import objects, functions
+import lib.sqcheck as sqcheck
+import lib.objects as objects
+import lib.functions as functions
 from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, \
 MOUSEMOTION, MOUSEBUTTONUP, K_p, K_PAUSE, FULLSCREEN
-from colors import *
+from lib.colors import *
 
 class game_runing:
     """game_runing - class of running game scene for playing"""
@@ -137,10 +138,10 @@ class game_runing:
                  is_stopped=True, \
                  sound_name="impactuX_click1") - 
                  adding 1 random ball to balls list"""
-        new_rand_params=(random.choice(xrange(self.x_min+self.dxy,self.x_max-self.dxy)), \
-                                    random.choice(xrange(self.y_min+self.dxy,self.y_max-self.dxy)), \
-                                    random.choice([-1,1])*random.choice(xrange(self.dd_min,self.dd_max)), \
-                                    random.choice([-1,1])*random.choice(xrange(self.dd_min,self.dd_max)))
+        new_rand_params=(random.choice(range(self.x_min+self.dxy,self.x_max-self.dxy)), \
+                                    random.choice(range(self.y_min+self.dxy,self.y_max-self.dxy)), \
+                                    random.choice([-1,1])*random.choice(range(self.dd_min,self.dd_max)), \
+                                    random.choice([-1,1])*random.choice(range(self.dd_min,self.dd_max)))
         self.add_ball(new_rand_params, \
                       objects.dsign(new_rand_params[2]), "rock", 0, \
                                 (self.x_min, self.y_min, \
@@ -223,10 +224,10 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
             corrupted_b = True
             sign_dx=random.choice([-1,1])
             while corrupted_b:
-                bbb1=objects.AnimationObj(pngs, random.choice(xrange(x_min+dxy,x_max-dxy)), \
-                                            random.choice(xrange(y_min+dxy,y_max-dxy)), \
-                                            sign_dx*random.choice(xrange(dx_min,dx_max)), \
-                                            random.choice([-1,1])*random.choice(xrange(dy_min,dy_max)), \
+                bbb1=objects.AnimationObj(pngs, random.choice(range(x_min+dxy,x_max-dxy)), \
+                                            random.choice(range(y_min+dxy,y_max-dxy)), \
+                                            sign_dx*random.choice(range(dx_min,dx_max)), \
+                                            random.choice([-1,1])*random.choice(range(dy_min,dy_max)), \
                                             1, 0, sign_dx, "rock", 0, \
                                             (x_min, y_min, x_max, y_max), True, soif1, snd)
                 corrupted_b = bbb1.is_impacted_list(bbb)
@@ -298,7 +299,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                         textlabels.set_named_obj_str("status", "Paused")
                         for o_b in bbb:
                             o_b.stopped=True
-                    last_time = time.clock()
+                    last_time = time.perf_counter()
 
             elif event.type == MOUSEBUTTONDOWN:
                 x_n0,y_n0=event.pos
@@ -356,7 +357,7 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                                 textlabels.set_named_obj_str("status", "Paused")
                                 for o_b in bbb:
                                     o_b.stopped=True
-                            last_time = time.clock()
+                            last_time = time.perf_counter()
                             #print start_runing
                         elif ddd == "exit":
                             #print "Exit"
@@ -381,10 +382,10 @@ def mainrun(scr_params=((640,480),0,32), lvl=0, balls_pos=None, g_time=0, g_scor
                         pygame.mouse.set_visible(True)
                         return return_vars(score_g=g_score, time_g=time_in_game, balls_g=bbb, win_g=(lvl==9), winlvl_g=True, level_g=lvl)
                     sign_dx=random.choice([-1,1])
-                    bbb1=objects.AnimationObj(pngs, random.choice(xrange(x_min+dxy,x_max-dxy)), \
-                                            random.choice(xrange(y_min+dxy,y_max-dxy)), \
-                                            sign_dx*random.choice(xrange(dx_min,dx_max)), \
-                                            random.choice([-1,1])*random.choice(xrange(dy_min,dy_max)), \
+                    bbb1=objects.AnimationObj(pngs, random.choice(range(x_min+dxy,x_max-dxy)), \
+                                            random.choice(range(y_min+dxy,y_max-dxy)), \
+                                            sign_dx*random.choice(range(dx_min,dx_max)), \
+                                            random.choice([-1,1])*random.choice(range(dy_min,dy_max)), \
                                             .1, 0, sign_dx, "rock", 300, \
                                             (x_min, y_min, x_max, y_max), False, soif1, snd)
                     bbb.append(bbb1)
@@ -421,4 +422,4 @@ if __name__ == '__main__':
     runing = True
     while runing:
         mmm=mainrun()
-        runing = (mmm <>"exit")
+        runing = (mmm!="exit")

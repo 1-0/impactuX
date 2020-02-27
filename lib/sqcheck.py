@@ -142,7 +142,7 @@ def SortQuadrangle (x1,y1,x2,y2,x3,y3,x4,y4):
         for k in range((i+1),4):
            
             if points[i]==points[k]:
-                print "not good - 2 points are same"
+                print("not good - 2 points are same")
                 return False
 
     points.sort()
@@ -163,7 +163,7 @@ def SortQuadrangle (x1,y1,x2,y2,x3,y3,x4,y4):
                 max_not_good=False
         if max_not_good:
             points=[points[1],points[2],points[3],points[0]]
-            print "points="+str(points)
+            print("points="+str(points))
                 
     point2=points[2]
     points[2]=points[max_dist_point_number]
@@ -216,31 +216,31 @@ def DirectPart (x1,y1,x2,y2,partscount):
 
 
 if __name__ == '__main__':
-    print 'DirectPart (2,2,6,6,360) '+str(DirectPart (2,2,6,6,360))
-    print 'DirectPart (6,6,2,2,360) '+str(DirectPart (6,6,2,2,360))
-    print 'DirectPart (0,0,3,4,360) '+str(DirectPart (0,0,3,4,360))
+    print('DirectPart (2,2,6,6,360) '+str(DirectPart (2,2,6,6,360)))
+    print('DirectPart (6,6,2,2,360) '+str(DirectPart (6,6,2,2,360)))
+    print('DirectPart (0,0,3,4,360) '+str(DirectPart (0,0,3,4,360)))
 
-    print 'DirectPart (5,5,3,4,360) '+str(DirectPart (5,5,3,4,360))
-    print 'DirectPart (5,5,6,4,360) '+str(DirectPart (5,5,6,4,360))
-    print 'DirectPart (7,8,3,4,360) '+str(DirectPart (7,8,3,4,360))
+    print('DirectPart (5,5,3,4,360) '+str(DirectPart (5,5,3,4,360)))
+    print('DirectPart (5,5,6,4,360) '+str(DirectPart (5,5,6,4,360)))
+    print('DirectPart (7,8,3,4,360) '+str(DirectPart (7,8,3,4,360)))
 
 
-    print 'DirectPart (2,2,6,6,4) '+str(DirectPart (2,2,6,6,4))
-    print 'DirectPart (6,6,2,2,4) '+str(DirectPart (6,6,2,2,4))
-    print 'DirectPart (5,5,3,4,4) '+str(DirectPart (5,5,3,4,4))
+    print('DirectPart (2,2,6,6,4) '+str(DirectPart (2,2,6,6,4)))
+    print('DirectPart (6,6,2,2,4) '+str(DirectPart (6,6,2,2,4)))
+    print('DirectPart (5,5,3,4,4) '+str(DirectPart (5,5,3,4,4)))
 
-#    print 'CSortQuadrangle (0,5,5,0,0,-5,-5,0, 1,1) '+str(CheckQuadrangle (0,5,5,0,0,-5,-5,0, 6,6))
-#    print 'CheckQuadrangle (0,1,1,0,0,-1,-1,0, 0,0) '+str(CheckQuadrangle (0,1,1,0,0,-1,-1,0, 0,0))
-#    print 'CheckQuadrangle (0,1,1,0,0,-1,-1,0, 0,0.11) '+str(CheckQuadrangle (0,1,1,0,0,-1,-1,0, 0,0.11))
+#    print('CSortQuadrangle (0,5,5,0,0,-5,-5,0, 1,1) '+str(CheckQuadrangle (0,5,5,0,0,-5,-5,0, 6,6)))
+#    print('CheckQuadrangle (0,1,1,0,0,-1,-1,0, 0,0) '+str(CheckQuadrangle (0,1,1,0,0,-1,-1,0, 0,0)))
+#    print('CheckQuadrangle (0,1,1,0,0,-1,-1,0, 0,0.11) '+str(CheckQuadrangle (0,1,1,0,0,-1,-1,0, 0,0.11)))
     
     
-    #print 'CSortQuadrangle (1,1,2,3,3,3,4,4)'+str(SortQuadrangle (1,1,2,2,3,3,4,4))
-    #print 'CSortQuadrangle (0,1,0,2,0,3,0,4)'+str(SortQuadrangle (0,1,0,2,0,3,0,4))
-    #print 'CSortQuadrangle (0,1,0,2,0,1,0,4)'+str(SortQuadrangle (0,1,0,2,0,1,0,4))
+    #print('CSortQuadrangle (1,1,2,3,3,3,4,4)'+str(SortQuadrangle (1,1,2,2,3,3,4,4)))
+    #print('CSortQuadrangle (0,1,0,2,0,3,0,4)'+str(SortQuadrangle (0,1,0,2,0,3,0,4)))
+    #print('CSortQuadrangle (0,1,0,2,0,1,0,4)'+str(SortQuadrangle (0,1,0,2,0,1,0,4)))
 
 
     
-    #print 'CheckRectPoint (0, 1, 2, 2, 9, 3)='+str(CheckRectPoint (0, 1, 2, 2, 9, 3))
+    #print('CheckRectPoint (0, 1, 2, 2, 9, 3)='+str(CheckRectPoint (0, 1, 2, 2, 9, 3)))
 
 
 

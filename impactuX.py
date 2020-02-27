@@ -20,8 +20,8 @@
 __version__ = "$Revision: 63990 $"
 # $Source$
 
-import lib.mainloop
+import lib.mainloop as mainloop
 
 if __name__ == '__main__':
-    lib.mainloop.mainrun()
+    mainloop.mainrun()
 

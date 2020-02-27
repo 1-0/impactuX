@@ -21,9 +21,10 @@
 import pygame, os
 from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, \
 MOUSEMOTION, MOUSEBUTTONUP #, FULLSCREEN
-import objects, functions 
+import lib.objects as objects
+import lib.functions as functions
 
-from colors import *
+from lib.colors import *
 
 def set_labels(t_score, t_time, l_score, l_time):
     i_exit = functions.iExit()
@@ -137,4 +138,4 @@ if __name__ == '__main__':
     runing = True
     while runing:
         mmm=mainrun()
-        runing = (mmm <>"exit")
+        runing = (mmm!="exit")

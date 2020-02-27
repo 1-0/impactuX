@@ -18,13 +18,13 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import menuI
-import storyI
-import runI
-import setupI
-import recordI
-import endI
-import functions
+import lib.menuI as menuI
+import lib.storyI as storyI
+import lib.runI as runI
+import lib.setupI as setupI
+import lib.recordI as recordI
+import lib.endI as endI
+import lib.functions as functions
 
 class scenes_run():
     """scenes_run - class of running game scenes"""

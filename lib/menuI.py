@@ -21,13 +21,14 @@
 import pygame, os
 from pygame.locals import QUIT, KEYUP, K_ESCAPE, MOUSEBUTTONDOWN, \
 MOUSEMOTION, MOUSEBUTTONUP, FULLSCREEN
-import objects, functions 
-from colors import *
+import lib.objects as objects
+import lib.functions as functions
+from lib.colors import *
 
 ####### init section #######
 def mainrun(scr_params=((640,480),0,32)):
     """mainrun(scr_params=((640,480),0,32)) - screen of main menu ImpactuX"""
-    #print "FULLSCREEN:--- "+str(FULLSCREEN)
+    #print("FULLSCREEN:--- "+str(FULLSCREEN))
     i_exit = functions.iExit() #button functions
     i_run = functions.iRun()
     i_setup = functions.iSetup()
@@ -130,5 +131,5 @@ if __name__ == '__main__':
     runing = True
     while runing:
         mmm=mainrun()
-        runing = (mmm <>"exit")
+        runing = (mmm!="exit")
 
